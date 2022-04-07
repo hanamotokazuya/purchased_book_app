@@ -8,7 +8,6 @@ const Base = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  margin-bottom: 10px;
 `
 
 const Wrapper = styled.div`
