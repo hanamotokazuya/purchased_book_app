@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from './Header'
+import Display from './Display'
 
 function App() {
   return (
-    <div>Appaaaaaaaaaaaaaaa</div>
+    <>
+      <Header />
+      <Display />
+    </>
   )
 }
 
