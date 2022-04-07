@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import AppContext from '../contexts/AppContext'
 import styled from 'styled-components'
+import { SEARCH_EVENT } from '../actions'
 
 const SearchForm = styled.form`
   padding: 5px;
@@ -23,9 +25,16 @@ const SearchButton = styled.button`
 
 
 function SearchBar() {
+  const { dispatch } = useContext(AppContext)
+  const [searchCategory, setSearchCategory] = useState("")
+  const [searchKeyword, setSearchKeyword] = useState("")
+  const handleClickSearchBook = (e) => {
+    e.preventDefault()
+    return dispatch({ type: SEARCH_EVENT, searchCategory, searchKeyword })
+  }
   return (
     <SearchForm>
-      <CategorySelect>
+      <CategorySelect onChange={(e) => setSearchCategory(e.target.value)}>
         <option>すべて</option>
         <option>制御</option>
         <option>プログラミング</option>
@@ -35,8 +44,8 @@ function SearchBar() {
         <option>数学</option>
         <option>その他</option>
       </CategorySelect>
-      <KeywordInput />
-      <SearchButton>検索</SearchButton>
+      <KeywordInput type="text" placeholder="キーワードを入力してください" onChange={(e) => setSearchKeyword(e.target.value)} />
+      <SearchButton onClick={handleClickSearchBook}>検索</SearchButton>
     </SearchForm>
   )
 }

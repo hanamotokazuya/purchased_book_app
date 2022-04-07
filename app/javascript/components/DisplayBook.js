@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Base = styled.div`
   width: 85%;
   margin: 0 auto;
+  max-width: 1120px;
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: #eaeded;

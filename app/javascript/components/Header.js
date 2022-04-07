@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import UserInput from './UserInput'
+import AppContext from '../contexts/AppContext'
+import useInterval from '../utils/useInterval'
 
-const Base = styled.div`
+const Base = styled.header`
   background-color: #111111;
   width: 100%;
   display: flex;
@@ -35,7 +37,27 @@ const Logo = styled.div`
   line-height: 40px;
 `
 
+const ResultBookCount = styled.p`
+  color: #eaeded;
+  margin: 0 auto;
+  font-size: 64px;
+  font-weight: bold;
+  &::after {
+    content: "冊";
+    font-size: 32px;
+  }
+`
+
 function Header() {
+
+  const { state: { showBooks } } = useContext(AppContext)
+  const [resultBookCount, setResultBookCount] = useState(0)
+  function countUpDown() {
+    resultBookCount < showBooks.length && setResultBookCount(resultBookCount + 1)
+    resultBookCount > showBooks.length && setResultBookCount(resultBookCount - 1)
+  }
+  useInterval(countUpDown, 10);
+
   return (
     <Base>
       <Wrapper>
@@ -44,6 +66,7 @@ function Header() {
           <p>管理</p>
         </Logo>
         <UserInput />
+        <ResultBookCount>{resultBookCount}</ResultBookCount>
       </Wrapper>
     </Base>
   )
