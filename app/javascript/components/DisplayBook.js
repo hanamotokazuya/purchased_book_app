@@ -1,17 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Base = styled.div`
-  width: 85%;
-  margin: 0 auto;
-  max-width: 1120px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: #eaeded;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-`
 
 const BookLists = styled.ul`
   display: flex;
@@ -34,13 +23,11 @@ const BookImage = styled.div`
 
 function DisplayBook() {
   return (
-    <Base>
-      <BookLists>
-        <BookList>
-          <BookImage />
-        </BookList>
-      </BookLists>
-    </Base>
+    <BookLists>
+      <BookList>
+        <BookImage />
+      </BookList>
+    </BookLists>
   )
 }
 
