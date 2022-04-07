@@ -1,10 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import UserInput from './UserInput'
 
-const Nabvar = styled.nav`
+const Base = styled.div`
   background-color: #111111;
   width: 100%;
-  min-height: 8vh;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+`
+
+const Wrapper = styled.div`
+  padding: 10px;
+  width: 85%;
+  max-width: 1120px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -28,14 +38,15 @@ const Logo = styled.div`
 
 function Header() {
   return (
-    <>
-      <Nabvar>
+    <Base>
+      <Wrapper>
         <Logo>
           <p>書籍</p>
           <p>管理</p>
         </Logo>
-      </Nabvar>
-    </>
+        <UserInput />
+      </Wrapper>
+    </Base>
   )
 }
 
