@@ -29,7 +29,6 @@ function Display() {
         <Routes>
           <Route path="/" element={<DisplayBook />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/book" element={<DisplayBook />} />
           <Route path="/pie_chart" element={<DisplayPieChart />}/>
         </Routes>
       </Wrapper>

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import UserInput from './UserInput'
 import AppContext from '../contexts/AppContext'
 import useInterval from '../utils/useInterval'
+import { Link } from 'react-router-dom'
 
 const Base = styled.header`
   background-color: #111111;
@@ -67,6 +68,7 @@ function Header() {
         </Logo>
         <UserInput />
         <ResultBookCount>{resultBookCount}</ResultBookCount>
+        <Link to="/signup">サインアップ</Link>
       </Wrapper>
     </Base>
   )
