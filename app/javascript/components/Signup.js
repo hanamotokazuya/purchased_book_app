@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import axios from 'axios'
 
 const Base = styled.div`
   width: 100%;
@@ -50,19 +52,41 @@ const FormButton = styled.button`
 `
 
 function Signup() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const navigate = useNavigate();
+
+  const createUser = (e, name, email, password, passwordConfirmation) => {
+    e.preventDefault()
+    const data = {
+      name: name,
+      email: email,
+      password: password,
+      password_confirmation: passwordConfirmation
+    }
+    axios.post("/api/v1/users", {user: data})
+    .then(res => {
+      console.log(res.data)
+      navigate("/book")
+    })
+    .catch(e => console.log(e))
+  }
+
   return (
     <Base>
       <Title>Sign up</Title>
       <SignupForm>
         <FormLabel>Name</FormLabel>
-        <FormText />
+        <FormText type="text" onChange={(e) => setName(e.target.value)}/>
         <FormLabel>Email</FormLabel>
-        <FormText />
+        <FormText type="text" onChange={(e) => setEmail(e.target.value)}/>
         <FormLabel>Password</FormLabel>
-        <FormText />
+        <FormText type="password" onChange={(e) => setPassword(e.target.value)}/>
         <FormLabel>Confirmation</FormLabel>
-        <FormText />
-        <FormButton>Create my account</FormButton>
+        <FormText type="password" onChange={(e) => setPasswordConfirmation(e.target.value)}/>
+        <FormButton onClick={(e) => createUser(e, name, email, password, passwordConfirmation)}>Create my account</FormButton>
       </SignupForm>
     </Base>
   )

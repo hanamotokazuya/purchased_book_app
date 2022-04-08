@@ -46,7 +46,7 @@ function UserInput() {
         </Button>
         </Links>
         <Routes>
-          <Route path="/" element={ <SearchBar />} />
+          <Route path="/book" element={ <SearchBar />} />
           <Route path="*" element={ <Outlet /> } />
         </Routes>
       </Wrapper>
