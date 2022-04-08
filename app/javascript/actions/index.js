@@ -1,1 +1,4 @@
 export const SEARCH_EVENT = "SEARCH_EVENT"
+export const CREATE_USER_EVENT = "CREATE_USER_EVENT"
+export const SIGN_OUT_EVENT = "SIGN_OUT_EVENT"
+export const SIGN_IN_EVENT = "SIGN_IN_EVENT"

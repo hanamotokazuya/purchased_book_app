@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { SIGN_OUT_EVENT } from '../actions'
 import styled from 'styled-components'
 import UserInput from './UserInput'
 import AppContext from '../contexts/AppContext'
@@ -51,11 +52,18 @@ const ResultBookCount = styled.p`
 
 function Header() {
 
-  const { state: { showBooks } } = useContext(AppContext)
+  const { state: { showBooks, currentUser: { name: user } }, dispatch} = useContext(AppContext)
   const [resultBookCount, setResultBookCount] = useState(0)
   function countUpDown() {
     resultBookCount < showBooks.length && setResultBookCount(resultBookCount + 1)
     resultBookCount > showBooks.length && setResultBookCount(resultBookCount - 1)
+  }
+
+  const signout = () => {
+    // sessionとcookiesを掃除する処理を書く
+
+    // カレントユーザーのステートを初期化する
+    dispatch({ type: SIGN_OUT_EVENT })
   }
   useInterval(countUpDown, 10);
 
@@ -66,9 +74,13 @@ function Header() {
           <p>書籍</p>
           <p>管理</p>
         </Logo>
-        <UserInput />
-        <ResultBookCount>{resultBookCount}</ResultBookCount>
-        <Link to="/signup">サインアップ</Link>
+        {!!user &&
+          <>
+            <UserInput />
+            <ResultBookCount>{resultBookCount}</ResultBookCount>
+            <Link to="/signin" onClick={signout}>サインアウト</Link>
+          </>
+        }
       </Wrapper>
     </Base>
   )

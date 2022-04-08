@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useContext } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import DisplayBook from './DisplayBook'
 import DisplayPieChart from './DisplayPieChart'
 import styled from 'styled-components'
 import Signup from './Signup'
+import Signin from './Signin'
+import AppContext from '../contexts/AppContext'
 
 const Base = styled.div`
   background-color: #33b913;
@@ -23,14 +25,21 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 function Display() {
+  const {state: { currentUser: { name: user } } } = useContext(AppContext);
   return (
     <Base>
       <Wrapper>
-        <Routes>
-          <Route path="/book" element={<DisplayBook />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/pie_chart" element={<DisplayPieChart />}/>
-        </Routes>
+        {!!user ?
+          <Routes>
+            <Route path="/book" element={<DisplayBook />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/pie_chart" element={<DisplayPieChart />}/>
+          </Routes> :
+          <Routes>
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        }
       </Wrapper>
     </Base>
   )

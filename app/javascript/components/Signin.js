@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import AppContext from '../contexts/AppContext'
-import { CREATE_USER_EVENT } from '../actions'
+import { SIGN_IN_EVENT } from '../actions'
 import { useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
@@ -17,7 +17,7 @@ const Title = styled.h1`
   margin: 6px 0;
   font-size: 48px;
 `
-const SignupForm = styled.form`
+const SigninForm = styled.form`
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -69,33 +69,29 @@ const ErrorMessage = styled.p`
 `
 
 
-function Signup() {
-  const [name, setName] = useState("");
+function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const { dispatch } = useContext(AppContext);
 
-  const createUser = (e, name, email, password, passwordConfirmation) => {
+  const signIn = (e, email, password) => {
     e.preventDefault()
     const data = {
-      name: name,
       email: email,
       password: password,
-      password_confirmation: passwordConfirmation
     }
     axios.post("/api/v1/users", {user: data})
     .then(res => {
       if (!Array.isArray(res.data)) {
       console.log(res.data)
       dispatch({
-        type: CREATE_USER_EVENT,
+        type: SIGN_IN_EVENT,
         name: res.data.name,
         email: res.data.email
       })
-      toast.success("登録完了！")
+      toast.success("サインイン！")
       navigate("/book")
       } else {
         setErrors(res.data)
@@ -107,27 +103,22 @@ function Signup() {
   }
   return (
     <Base>
-      <Title>サインアップ</Title>
-      <SignupForm>
-        <FormLabel>Name</FormLabel>
-        <FormText type="text" onChange={(e) => setName(e.target.value)}/>
+      <Title>サインイン</Title>
+      <SigninForm>
         <FormLabel>Email</FormLabel>
         <FormText type="text" onChange={(e) => setEmail(e.target.value)}/>
         <FormLabel>Password</FormLabel>
         <FormText type="password" onChange={(e) => setPassword(e.target.value)}/>
-        <FormLabel>Confirmation</FormLabel>
-        <FormText type="password" onChange={(e) => setPasswordConfirmation(e.target.value)}/>
         <FormButton onClick={(e) => createUser(e, name, email, password, passwordConfirmation)}>Create my account</FormButton>
-      </SignupForm>
-      <Link to="/signin">サインイン</Link>
+      </SigninForm>
+      <Link to="/signup">サインアップ</Link>
       {!!errors.length &&
         (<ErrorMessageBox>
-          {errors.map((error, i) => <ErrorMessage key={i}>{error}</ErrorMessage>)}
+          <ErrorMessage>メールアドレスまたはパスワードが違います。</ErrorMessage>
         </ErrorMessageBox>)
       }
-
     </Base>
   )
 }
 
-export default Signup
+export default Signin
