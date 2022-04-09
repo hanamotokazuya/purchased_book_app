@@ -69,10 +69,10 @@ const ErrorMessage = styled.p`
 `
 
 
-function Signin() {
+function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useContext(AppContext);
 
@@ -82,10 +82,10 @@ function Signin() {
       email: email,
       password: password,
     }
-    axios.post("/api/v1/users", {user: data})
+    axios.post("/api/v1/sessions", {session: data}, { withCredentials: true })
     .then(res => {
-      if (!Array.isArray(res.data)) {
-      console.log(res.data)
+      if (res.data && !Array.isArray(res.data)) {
+        console.log(res.data)
       dispatch({
         type: SIGN_IN_EVENT,
         name: res.data.name,
@@ -94,7 +94,7 @@ function Signin() {
       toast.success("サインイン！")
       navigate("/book")
       } else {
-        setErrors(res.data)
+        setIsError(!res.data)
       }
     })
     .catch(e => {
@@ -109,10 +109,10 @@ function Signin() {
         <FormText type="text" onChange={(e) => setEmail(e.target.value)}/>
         <FormLabel>Password</FormLabel>
         <FormText type="password" onChange={(e) => setPassword(e.target.value)}/>
-        <FormButton onClick={(e) => createUser(e, name, email, password, passwordConfirmation)}>Create my account</FormButton>
+        <FormButton onClick={(e) => signIn(e, email, password)}>サインインする</FormButton>
       </SigninForm>
-      <Link to="/signup">サインアップ</Link>
-      {!!errors.length &&
+      <Link to="/signup">新規登録</Link>
+      {isError &&
         (<ErrorMessageBox>
           <ErrorMessage>メールアドレスまたはパスワードが違います。</ErrorMessage>
         </ErrorMessageBox>)
@@ -121,4 +121,4 @@ function Signin() {
   )
 }
 
-export default Signin
+export default SignIn
