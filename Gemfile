@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 # NameError: uninitialized constant Mail::TestMailer対策
 gem 'net-smtp'
-
+gem 'rack-cors'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
