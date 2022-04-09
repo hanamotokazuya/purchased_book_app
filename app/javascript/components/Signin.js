@@ -82,7 +82,7 @@ function SignIn() {
       email: email,
       password: password,
     }
-    axios.post("/api/v1/sessions", {session: data}, { withCredentials: true })
+    axios.post("/api/v1/sessions/create", {session: data}, { withCredentials: true })
     .then(res => {
       if (res.data && !Array.isArray(res.data)) {
         console.log(res.data)

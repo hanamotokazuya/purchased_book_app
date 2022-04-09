@@ -5,6 +5,7 @@ import UserInput from './UserInput'
 import AppContext from '../contexts/AppContext'
 import useInterval from '../utils/useInterval'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Base = styled.header`
   background-color: #111111;
@@ -61,7 +62,7 @@ function Header() {
 
   const signout = () => {
     // sessionとcookiesを掃除する処理を書く
-
+    axios.delete("api/v1/sessions/destroy")
     // カレントユーザーのステートを初期化する
     dispatch({ type: SIGN_OUT_EVENT })
   }

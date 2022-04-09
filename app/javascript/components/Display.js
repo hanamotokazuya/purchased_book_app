@@ -1,5 +1,5 @@
 import React, {useContext } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import DisplayBook from './DisplayBook'
 import DisplayPieChart from './DisplayPieChart'
 import styled from 'styled-components'
@@ -34,10 +34,12 @@ function Display() {
             <Route path="/book" element={<DisplayBook />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/pie_chart" element={<DisplayPieChart />}/>
+            <Route path="*" element={ <Outlet /> } />
           </Routes> :
           <Routes>
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={ <Outlet /> } />
           </Routes>
         }
       </Wrapper>

@@ -6,6 +6,7 @@ import {
 } from '../actions'
 
 const events = (state = [], action) => {
+  let isSignIn = false;
   let currentUser = {};
   switch(action.type) {
     case SEARCH_EVENT:
@@ -22,25 +23,28 @@ const events = (state = [], action) => {
       return { ...state, showBooks }
     case CREATE_USER_EVENT:
       console.log("DISPATCH!! CREATE_USER_EVENT!")
+      isSignIn = true;
       currentUser = {
         name: action.name,
         email: action.email
       }
-      return { ...state, currentUser }
+      return { ...state, isSignIn, currentUser }
     case SIGN_IN_EVENT:
       console.log("DISPATCH!! SIGN_IN_EVENT!")
+      isSignIn = true;
       currentUser = {
         name: action.name,
         email: action.email
       }
-      return { ...state, currentUser }
+      return { ...state, isSignIn, currentUser }
     case SIGN_OUT_EVENT:
       console.log("DISPATCH!! SIGN_OUT_EVENT!")
+      isSignIn = false;
       currentUser = {
         name: "",
         email: ""
       }
-      return { ...state, currentUser }
+      return { ...state, isSignIn, currentUser }
     default:
       return state;
   }

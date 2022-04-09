@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: redirect("/book")
+  root to: "site#index"
   get "/book", to: "site#index"
   get "/pie_chart", to: "site#index"
   get "/signup", to: "site#index"
@@ -13,7 +13,8 @@ Rails.application.routes.draw do
       get "sessions/check", to: "sessions#check"
       resources :users, only: %i[index show create update destroy]
 
-      resources :sessions, only: %i[create destroy]
+      post "sessions/create", to: "sessions#create"
+      delete "sessions/destroy", to: "sessions#destroy"
     end
   end
 end
