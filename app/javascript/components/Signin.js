@@ -41,6 +41,18 @@ const FormText = styled.input`
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
   margin-bottom: 15px;
 `
+const FormCheckBoxWrapper = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+`
+const RememberMeCheckBox = styled.input`
+  margin-right: 10px;
+`
+const FormCheckBoxLabel = styled.label`
+  max-width: 100%;
+  font-weight: 500;
+`
 const FormButton = styled.button`
   margin-top: 10px;
   width: 100%;
@@ -72,15 +84,17 @@ const ErrorMessage = styled.p`
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isRemember, setIsRemember] = useState(false);
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useContext(AppContext);
 
-  const signIn = (e, email, password) => {
+  const signIn = (e, email, password, isRemember) => {
     e.preventDefault()
     const data = {
       email: email,
       password: password,
+      remember_me: isRemember
     }
     axios.post("/api/v1/sessions/create", {session: data}, { withCredentials: true })
     .then(res => {
@@ -105,11 +119,15 @@ function SignIn() {
     <Base>
       <Title>サインイン</Title>
       <SigninForm>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>Eメール</FormLabel>
         <FormText type="text" onChange={(e) => setEmail(e.target.value)}/>
-        <FormLabel>Password</FormLabel>
+        <FormLabel>パスワード</FormLabel>
         <FormText type="password" onChange={(e) => setPassword(e.target.value)}/>
-        <FormButton onClick={(e) => signIn(e, email, password)}>サインインする</FormButton>
+        <FormCheckBoxWrapper>
+          <RememberMeCheckBox type="checkbox" onChange={() => setIsRemember(!isRemember)}/>
+          <FormCheckBoxLabel>次回から自動でログイン</FormCheckBoxLabel>
+        </FormCheckBoxWrapper>
+        <FormButton onClick={(e) => signIn(e, email, password, isRemember)}>サインインする</FormButton>
       </SigninForm>
       <Link to="/signup">新規登録</Link>
       {isError &&

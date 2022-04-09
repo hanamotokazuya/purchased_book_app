@@ -109,13 +109,13 @@ function Signup() {
     <Base>
       <Title>サインアップ</Title>
       <SignupForm>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>名前</FormLabel>
         <FormText type="text" onChange={(e) => setName(e.target.value)}/>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>Eメール</FormLabel>
         <FormText type="text" onChange={(e) => setEmail(e.target.value)}/>
-        <FormLabel>Password</FormLabel>
+        <FormLabel>パスワード</FormLabel>
         <FormText type="password" onChange={(e) => setPassword(e.target.value)}/>
-        <FormLabel>Confirmation</FormLabel>
+        <FormLabel>パスワード(確認用)</FormLabel>
         <FormText type="password" onChange={(e) => setPasswordConfirmation(e.target.value)}/>
         <FormButton onClick={(e) => createUser(e, name, email, password, passwordConfirmation)}>Create my account</FormButton>
       </SignupForm>

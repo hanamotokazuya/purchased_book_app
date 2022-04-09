@@ -9,6 +9,7 @@ class Api::V1::SessionsController < ApplicationController
         if user && user.authenticate(params[:session][:password])
             # ユーザーがログインする処理を書く
             log_in user
+            params[:session][:remember_me] ? remember(user) : forget(user)
             render json: user
         else
             # エラーメッセージをJSONで渡す
@@ -17,6 +18,6 @@ class Api::V1::SessionsController < ApplicationController
     end
 
     def destroy
-        log_out
+        log_out if logged_in?
     end
 end
