@@ -15,6 +15,12 @@ class Api::V1::BooksController < ApplicationController
     end
 
     def destroy
+        book = current_user.books.find_by(id: params[:id])
+        if book.destroy
+            head :no_content
+        else
+            render json: { error: "Failed to destroy" }, status: 422
+        end
     end
 
     private

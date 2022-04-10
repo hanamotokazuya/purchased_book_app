@@ -78,3 +78,14 @@ p, h1, h2, h3, h4, h5, h6 {
   margin-top: 45px;
   display: table-cell;
 }
+
+@keyframes fadeDownLegendAnime {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

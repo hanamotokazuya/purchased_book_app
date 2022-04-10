@@ -4,7 +4,8 @@ import {
   SIGN_OUT_EVENT,
   SIGN_IN_EVENT,
   SHOW_BOOK_EVENT,
-  CREATE_BOOK_EVENT
+  CREATE_BOOK_EVENT,
+  DELETE_BOOK_EVENT
 } from '../actions'
 
 const events = (state = [], action) => {
@@ -55,6 +56,9 @@ const events = (state = [], action) => {
     case CREATE_BOOK_EVENT:
       console.log("DISPATCH! CREATE_BOOK_EVENT!")
       return { ...state, showBooks: [action.book, ...state.showBooks] }
+    case DELETE_BOOK_EVENT:
+      console.log("DISPATCH! DELETE_BOOK_EVENT!")
+      return { ...state, showBooks: [...state.showBooks].filter((book) => book.id !== action.id)}
     default:
       return state;
   }

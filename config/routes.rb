@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       delete "sessions/destroy", to: "sessions#destroy"
       get "books/index", to: "books#index"
       post "books/create", to: "books#create"
-      delete "books/destroy", to: "books#destroy"
+      delete "books/destroy/:id", to: "books#destroy"
     end
   end
 end
