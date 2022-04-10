@@ -19,9 +19,9 @@ const BookList = styled.li`
   padding: 0 10px 20px 10px;
 `
 
-const BookImage = styled.div`
+const BookImage = styled.img`
   height: 100%;
-  background-color: blue;
+  /* background-color: blue; */
 `
 
 function DisplayBook() {
@@ -40,7 +40,7 @@ function DisplayBook() {
     <BookLists>
       {showBooks.map((book, key) => (
         <BookList key={key} onClick={() => handleClickBookDelete(book)}>
-          <BookImage />{book.title}
+          <BookImage src={book.url}/>{book.title}
         </BookList>
       ))}
     </BookLists>

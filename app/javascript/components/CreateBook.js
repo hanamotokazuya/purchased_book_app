@@ -27,6 +27,10 @@ const TitleInput = styled.input`
   height: 30px;
   margin-right: 10px;
 `
+const FileField = styled.input`
+  height: 30px;
+  margin-right: 10px;
+`
 const SubmitButton = styled.button`
   height: 30px;
   border-radius: 5px;
@@ -53,11 +57,25 @@ function CreateBook() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [image, setImage] = useState();
   const [errors, setErrors] = useState([]);
 
-  const handleClickSubmitBook = (e, title, category) => {
+  const getImage = e => {
+    const reader = new FileReader();
+    const files = e.target.files;
+    if (files) {
+      reader.onload = () => {
+        setImage({
+          data: reader.result,
+          name: Math.random().toString(36).slice(-8)
+        })
+      }
+      reader.readAsDataURL(files[0])
+    }
+  };
+  const handleClickSubmitBook = (e, title, category, image) => {
     e.preventDefault()
-    const data = { title, category }
+    const data = { title, category, image }
     axios.post("/api/v1/books/create", { book: data })
     .then(res => {
       if (!Array.isArray(res.data)) {
@@ -90,7 +108,8 @@ function CreateBook() {
           <option>数学</option>
           <option>その他</option>
         </CategorySelect>
-        <SubmitButton onClick={(e) => handleClickSubmitBook(e, title, category)}>追加</SubmitButton>
+        <FileField type="file" accept='image/*,.png,.jpg,.jpeg,.gif' onChange={getImage}/>
+        <SubmitButton onClick={(e) => handleClickSubmitBook(e, title, category, image)}>追加</SubmitButton>
       </CreateBookForm>
       {!!errors.length &&
         (<ErrorMessageBox>
