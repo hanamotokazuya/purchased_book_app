@@ -106,7 +106,7 @@ function SignIn() {
         email: res.data.email
       })
       toast.success("サインイン！")
-      navigate("/book")
+      navigate("/books")
       } else {
         setIsError(!res.data)
       }

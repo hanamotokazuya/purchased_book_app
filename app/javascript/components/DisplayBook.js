@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import AppContext from '../contexts/AppContext'
 
 
 const BookLists = styled.ul`
@@ -22,11 +23,15 @@ const BookImage = styled.div`
 `
 
 function DisplayBook() {
+  const {state: { showBooks } } = useContext(AppContext);
+  console.log(showBooks)
   return (
     <BookLists>
-      <BookList>
-        <BookImage />
-      </BookList>
+      {showBooks.map((book, index) => (
+        <BookList key={index}>
+          <BookImage />
+        </BookList>
+      ))}
     </BookLists>
   )
 }

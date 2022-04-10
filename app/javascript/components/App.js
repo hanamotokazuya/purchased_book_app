@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { SIGN_IN_EVENT } from '../actions'
+import { SIGN_IN_EVENT, SHOW_BOOK_EVENT } from '../actions'
 
 
 function App() {
@@ -22,13 +22,13 @@ function App() {
   }
   const [state, dispatch] = useReducer(events, initialState)
   const navigate = useNavigate();
-  useLayoutEffect(() => {
+  useEffect(() => {
 
     console.log("DISPATCH! useLayoutEffect check!")
     let name = "";
     let email = "";
     let isSignIn = false;
-    axios.get("api/v1/sessions/check")
+    axios.get("/api/v1/sessions/check")
     .then(res => {
       if(res.data){
         isSignIn = true;
@@ -39,9 +39,20 @@ function App() {
     })
     .then(() => {
       console.log(`PROMISE ${isSignIn}`)
-      isSignIn ? navigate("/book") : navigate("/signin")
+      isSignIn ? navigate("/books") : navigate("/signin")
     })
   }, [])
+
+  useEffect(() => {
+    console.log(`isSignIn: ${state.isSignIn}`)
+    state.isSignIn && axios.get("/api/v1/books/index")
+      .then(res => {
+        console.log(res.data)
+        if(res.data){
+          dispatch({ type: SHOW_BOOK_EVENT, showBooks: res.data })
+      }
+    })
+  }, [state.isSignIn, state.books])
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

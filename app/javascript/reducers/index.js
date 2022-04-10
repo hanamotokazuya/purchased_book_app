@@ -2,12 +2,14 @@ import {
   SEARCH_EVENT,
   CREATE_USER_EVENT,
   SIGN_OUT_EVENT,
-  SIGN_IN_EVENT
+  SIGN_IN_EVENT,
+  SHOW_BOOK_EVENT
 } from '../actions'
 
 const events = (state = [], action) => {
   let isSignIn = false;
   let currentUser = {};
+  let showBooks = [];
   switch(action.type) {
     case SEARCH_EVENT:
       console.log("DISPATCH!! SEARCH_EVENT!")
@@ -45,6 +47,10 @@ const events = (state = [], action) => {
         email: ""
       }
       return { ...state, isSignIn, currentUser }
+    case SHOW_BOOK_EVENT:
+      showBooks = action.showBooks;
+      console.log("DISPATCH! SHOW_BOOK_EVENT!")
+      return { ...state, showBooks }
     default:
       return state;
   }

@@ -5,6 +5,7 @@ import DisplayPieChart from './DisplayPieChart'
 import styled from 'styled-components'
 import Signup from './Signup'
 import Signin from './Signin'
+import CreateBook from './CreateBook'
 import AppContext from '../contexts/AppContext'
 
 const Base = styled.div`
@@ -23,6 +24,7 @@ const Wrapper = styled.div`
   border-radius: 10px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 `
 function Display() {
   const {state: { currentUser: { name: user } } } = useContext(AppContext);
@@ -31,7 +33,8 @@ function Display() {
       <Wrapper>
         {!!user ?
           <Routes>
-            <Route path="/book" element={<DisplayBook />} />
+            <Route path="/books" element={<DisplayBook />} />
+            <Route path="/books/new" element={<CreateBook />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/pie_chart" element={<DisplayPieChart />}/>
             <Route path="*" element={ <Outlet /> } />

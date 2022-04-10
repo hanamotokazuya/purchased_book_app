@@ -39,14 +39,17 @@ function UserInput() {
       <Wrapper>
         <Links>
         <Button>
-          <Link to="/book">本を並べる</Link>
+          <Link to="/books">本を並べる</Link>
         </Button>
         <Button>
           <Link to="/pie_chart">パイチャート</Link>
         </Button>
+        <Button>
+          <Link to="/books/new">本を追加する</Link>
+        </Button>
         </Links>
         <Routes>
-          <Route path="/book" element={ <SearchBar />} />
+          <Route path="/books" element={ <SearchBar />} />
           <Route path="*" element={ <Outlet /> } />
         </Routes>
       </Wrapper>

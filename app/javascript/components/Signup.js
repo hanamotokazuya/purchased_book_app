@@ -96,7 +96,7 @@ function Signup() {
         email: res.data.email
       })
       toast.success("登録完了！")
-      navigate("/book")
+      navigate("/books")
       } else {
         setErrors(res.data)
       }

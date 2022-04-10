@@ -62,7 +62,7 @@ function Header() {
 
   const signout = () => {
     // sessionとcookiesを掃除する処理を書く
-    axios.delete("api/v1/sessions/destroy")
+    axios.delete("/api/v1/sessions/destroy")
     // カレントユーザーのステートを初期化する
     dispatch({ type: SIGN_OUT_EVENT })
   }
