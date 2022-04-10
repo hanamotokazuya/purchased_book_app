@@ -10,8 +10,9 @@ import AppContext from '../contexts/AppContext'
 
 const Base = styled.div`
   background-color: #33b913;
-  height: 100%;
+  height: 100vh;
   padding-top: 10px;
+  padding-bottom: 10px;
 `
 const Wrapper = styled.div`
   width: 85%;

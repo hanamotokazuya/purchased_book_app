@@ -24,7 +24,7 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
 
-    console.log("DISPATCH! useLayoutEffect check!")
+    console.log("DISPATCH! useEffect check!")
     let name = "";
     let email = "";
     let isSignIn = false;
@@ -38,16 +38,13 @@ function App() {
       }
     })
     .then(() => {
-      console.log(`PROMISE ${isSignIn}`)
       isSignIn ? navigate("/books") : navigate("/signin")
     })
   }, [])
 
   useEffect(() => {
-    console.log(`isSignIn: ${state.isSignIn}`)
     state.isSignIn && axios.get("/api/v1/books/index")
       .then(res => {
-        console.log(res.data)
         if(res.data){
           dispatch({ type: SHOW_BOOK_EVENT, showBooks: res.data })
       }

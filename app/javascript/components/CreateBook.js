@@ -64,8 +64,7 @@ function CreateBook() {
         console.log(res.data)
         dispatch({
           type: CREATE_BOOK_EVENT,
-          title: res.data.title,
-          category: res.data.category
+          book: res.data
         })
         toast.success("新しく本が追加されました！")
         navigate("/books")

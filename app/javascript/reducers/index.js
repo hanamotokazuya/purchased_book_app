@@ -3,7 +3,8 @@ import {
   CREATE_USER_EVENT,
   SIGN_OUT_EVENT,
   SIGN_IN_EVENT,
-  SHOW_BOOK_EVENT
+  SHOW_BOOK_EVENT,
+  CREATE_BOOK_EVENT
 } from '../actions'
 
 const events = (state = [], action) => {
@@ -51,6 +52,9 @@ const events = (state = [], action) => {
       showBooks = action.showBooks;
       console.log("DISPATCH! SHOW_BOOK_EVENT!")
       return { ...state, showBooks }
+    case CREATE_BOOK_EVENT:
+      console.log("DISPATCH! CREATE_BOOK_EVENT!")
+      return { ...state, showBooks: [action.book, ...state.showBooks] }
     default:
       return state;
   }
