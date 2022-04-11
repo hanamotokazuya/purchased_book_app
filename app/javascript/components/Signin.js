@@ -15,10 +15,12 @@ const Base = styled.div`
 `
 const Title = styled.h1`
   margin: 6px 0;
-  font-size: 48px;
+  font-size: 20px;
 `
 const SigninForm = styled.form`
+  font-size: 14px;
   width: 50%;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -77,7 +79,7 @@ const ErrorMessageBox = styled.div`
   margin-bottom: 15px;
 `
 const ErrorMessage = styled.p`
-  font-size: 14px;
+  font-size: 12px;
 `
 
 

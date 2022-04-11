@@ -7,18 +7,27 @@ import Signup from './Signup'
 import Signin from './Signin'
 import CreateBook from './CreateBook'
 import AppContext from '../contexts/AppContext'
+import { pc, tab, sp } from '../utils/media'
+
 
 const Base = styled.div`
   background-color: #33b913;
-  height: 100vh;
   padding-top: 10px;
   padding-bottom: 10px;
+  ${pc`
+    transform: translateY(92px);
+  `}
+  ${tab`
+    transform: translateY(76px);
+  `}
+  ${sp`
+    transform: translateY(76px);
+  `}
 `
 const Wrapper = styled.div`
-  width: 85%;
-  height: 100%;
+  width: 95%;
   margin: 0 auto;
-  max-width: 1120px;
+  max-width: 1024px;
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: #eaeded;

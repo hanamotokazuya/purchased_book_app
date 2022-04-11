@@ -4,6 +4,7 @@ import {Routes, Route, Link as Li, Outlet } from 'react-router-dom'
 import SearchBar from './SearchBar'
 import CreateBook from './CreateBook'
 import { useSpring, animated } from 'react-spring'
+import Hamburger from './Hamburger'
 
 const Base = styled.div`
   width: 100%;
@@ -71,6 +72,7 @@ function UserInput() {
         <CreateBook close={() => setToggle(!toggle)}/>
       </UpDownAnime>
       <Base>
+          <Hamburger />
           <Links>
             <Link to="/books">本を並べる</Link>
             <Link to="/pie_chart">パイチャート</Link>

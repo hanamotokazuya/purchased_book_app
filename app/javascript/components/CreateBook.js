@@ -13,7 +13,7 @@ const Base = styled.div`
   transform: translate(-50%, -50%);
 `
 const Wrapper = styled.div`
-  width: 350px;
+  width: 280px;
   height: 200px;
   padding: 5px;
   border-radius: 4px;
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   align-items: center;
 `
 const Icon = styled.div`
-  width: 300px;
+  width: 250px;
   display: flex;
   justify-content: right;
   margin-bottom: 5px;
@@ -37,30 +37,33 @@ const CreateBookForm = styled.form`
   align-items: center;
 `
 const CategorySelect = styled.select`
-  width: 300px;
+  font-size: 14px;
+  width: 250px;
   height: 30px;
   margin-bottom: 10px;
 `
 const TitleInput = styled.input`
-  width: 300px;
+  font-size: 14px;
+  width: 250px;
   height: 30px;
   margin-bottom: 10px;
 `
 const FileField = styled.input`
-  width: 300px;
+  font-size: 14px;
+  width: 250px;
   height: 30px;
   margin-bottom: 10px;
 `
 const SubmitButton = styled.button`
-  width: 300px;
+  font-size: 14px;
+  width: 250px;
   height: 30px;
   border-radius: 5px;
   background-color: white;
   color: #000000;
-  font-weight: bold;
 `
 const ErrorMessageBox = styled.div`
-  width: 350px;
+  width: 300px;
   padding: 10px;
   margin-top: 10px;
   color: red;

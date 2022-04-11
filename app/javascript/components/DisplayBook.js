@@ -4,34 +4,57 @@ import AppContext from '../contexts/AppContext'
 import { DELETE_BOOK_EVENT } from '../actions'
 import axios from 'axios'
 import { MdDeleteForever } from 'react-icons/md'
+import { pc, tab, sp } from '../utils/media'
+
+
 
 const BookLists = styled.ul`
   display: flex;
   justify-content: space-around;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 0;
 `
 
 const BookList = styled.li`
   list-style: none;
-  width: 350px;
-  height: 467px;
-  padding: 0 10px 20px 10px;
+  position: relative;
+  ${pc`
+    padding: 0 10px 20px 10px;
+    width: 194px;
+    height: ${194 * 1.41}px;
+  `}
+  ${tab`
+    padding: 0 5px 10px 5px;
+    width: 170px;
+    height: ${170 * 1.41}px;
+  `}
+  ${sp`
+    padding: 0 4px 8px 4px;
+    width: 95px;
+    height: ${95 * 1.41}px;
+  `}
 `
-const ImageTitleWrapper = styled.div`
-  padding-top: 3px;
-  padding-left: 5px;
-  padding-right: 5px;
-  display: flex;
-  justify-content: space-between;
-`
-const ImageTitle = styled.p`
-  font-size: 13px;
+const DeleteIcon = styled(MdDeleteForever)`
+  cursor: pointer;
+  position: absolute;
+  ${pc`
+    top: 10px;
+    right: 20px;
+  `}
+  ${tab`
+    top: 10px;
+    right: 20px;
+  `}
+  ${sp`
+    top: 3px;
+    right: 7px;
+  `}
 `
 
 const BookImage = styled.img`
+  width:100%;
   height: 100%;
-  /* background-color: blue; */
 `
 
 function DisplayBook() {
@@ -50,13 +73,11 @@ function DisplayBook() {
   }
   return (
     <BookLists>
+      {!showBooks.length && <p>本がありません。</p>}
       {showBooks.map((book, key) => (
         <BookList key={key}>
           <BookImage src={book.url}/>
-          <ImageTitleWrapper>
-            <ImageTitle>{book.title}</ImageTitle>
-            <MdDeleteForever onClick={() => handleClickBookDelete(book)} />
-          </ImageTitleWrapper>
+          <DeleteIcon onClick={() => handleClickBookDelete(book)} />
         </BookList>
       ))}
     </BookLists>

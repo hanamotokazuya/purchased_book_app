@@ -5,7 +5,10 @@ import PieChartFig from "./PieChartFig";
 import styled from "styled-components";
 
 const Base = styled.div`
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content:left;
   align-items: center;
 `
 
@@ -18,8 +21,8 @@ function DisplayPieChart() {
 
   return (
     <Base>
-      <PieChartFig data={dataForPieChart} colors={COLORS} />
       <PieChartLegends data={dataForPieChart} colors={COLORS} />
+      <PieChartFig data={dataForPieChart} colors={COLORS} />
     </Base>
   );
 }

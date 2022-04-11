@@ -4,72 +4,155 @@ import styled from 'styled-components'
 import UserInput from './UserInput'
 import AppContext from '../contexts/AppContext'
 import useInterval from '../utils/useInterval'
-import { Link as Li } from 'react-router-dom'
+import { Routes, Route, Link as Li, Outlet } from 'react-router-dom'
 import axios from 'axios'
+import { pc, tab, sp } from '../utils/media'
+import Hamburger from './Hamburger'
+import { useSpring, animated } from 'react-spring'
+import CreateBook from './CreateBook'
+import SearchBar from './SearchBar'
 
 const Base = styled.header`
+  position: fixed;
+  z-index: 10;
   background-color: #111111;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  ${pc`
+  height: 92px;
+  `}
+  ${tab`
+  height: 76px;
+  `}
+  ${sp`
+  height: 76px;
+  `}
+`
+const Wrapper0 = styled.div`
   margin: 0 auto;
+  padding: 10px;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 const Wrapper = styled.div`
-  padding: 10px;
-  width: 85%;
-  max-width: 1120px;
   display: flex;
-  justify-content: space-around;
+  justify-content: left;
   align-items: center;
 `
 
 const Logo = styled.div`
-  width: 95px;
-  height: 95px;
   border-color: #eaeded;
-  border-style: solid;
   border-radius: 35%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #eaeded;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 40px;
+  ${pc`
+    border 4px solid;
+    width: 64px;
+    height: 64px;
+    font-size: 16px;
+    font-weight: bold;
+  `}
+  ${tab`
+    border 2px solid;
+    width: 32px;
+    height: 32px;
+    font-size: 8px;
+  `}
+  ${sp`
+    width: 16px;
+    height: 16px;
+    font-size: 8px;
+  `}
 `
 
 const ResultBookCount = styled.p`
   color: #eaeded;
-  margin: 0 auto;
-  font-size: 64px;
   font-weight: bold;
-  &::after {
-    content: "冊";
+  ${pc`
+    font-size: 48px;
+    &::after {
+      content: "冊";
+      font-size: 16px;
+    }
+  `}
+  ${tab`
     font-size: 32px;
+    &::after {
+      content: "冊";
+      font-size: 16px;
+    }
+  `}
+  ${sp`
+    font-size: 16px;
+    &::after {
+      content: "冊";
+      font-size: 8px;
+    }
+  `}
+`
+const Blank = styled.div`
+  margin: 0 auto;
+`
+// UserInput
+const Links = styled.div`
+  display: flex;
+  justify-content: right;
+  ${pc`
+    display: block;
+  `}
+  ${tab`
+    display: none;
+  `}
+  ${sp`
+    display: none;
+  `}
+`
+
+const AddBookButton = styled.button`
+  color: white;
+  font-size: 14px;
+  border: none;
+  padding: 3px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  &:hover {
+    background-color: #eb6100;
   }
 `
-const Link = styled(Li)`
-  color: white;
-  background-color: #337ab7;
-  margin-right: 10px;
+const UpDownAnime = styled(animated.div)`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+`
+const Link1 = styled(Li)`
+  font-size: 14px;
   padding: 3px 10px;
-  border-radius: 5px;
-  border: none;
+  color: white;
   text-decoration: none;
   cursor: pointer;
   &:hover {
     background-color: #eb6100;
   }
 `
-const LinkWrapper = styled.div`
-  height: 100%;
-  padding: 5px;
-`
+
 function Header() {
 
   const { state: { showBooks, currentUser: { name: user } }, dispatch} = useContext(AppContext)
   const [resultBookCount, setResultBookCount] = useState(0)
+  const [toggle, setToggle] = useState(false);
+  const spring = useSpring({
+    opacity: toggle ? "1" : "0",
+    display: toggle ? "block" : "none",
+    config: {duration: 250 }
+  })
   function countUpDown() {
     resultBookCount < showBooks.length && setResultBookCount(resultBookCount + 1)
     resultBookCount > showBooks.length && setResultBookCount(resultBookCount - 1)
@@ -85,21 +168,37 @@ function Header() {
 
   return (
     <Base>
+      <Wrapper0>
       <Wrapper>
-        <Logo>
-          <p>書籍</p>
-          <p>管理</p>
-        </Logo>
+        <Logo> <p>書籍<br/>管理</p> </Logo>
         {!!user &&
           <>
-            <UserInput />
-            <ResultBookCount>{resultBookCount}</ResultBookCount>
-            <LinkWrapper>
-              <Link to="/signin" onClick={signout}>サインアウト</Link>
-            </LinkWrapper>
+            <UpDownAnime style={spring}>
+              <CreateBook close={() => setToggle(!toggle)}/>
+            </UpDownAnime>
+            <Routes>
+              <Route path="/books" element={ <SearchBar />} />
+              <Route path="*" element={ <Outlet /> } />
+            </Routes>
+            <Routes>
+              <Route path="/books" element={<ResultBookCount>{resultBookCount}</ResultBookCount>}/>
+              <Route path="*" element={ <Blank /> } />
+            </Routes>
           </>
         }
       </Wrapper>
+        {!!user &&
+          <>
+            <Links>
+              <Link1 to="/books">本を並べる</Link1>
+              <Link1 to="/pie_chart">パイチャート</Link1>
+              <AddBookButton onClick={() => setToggle(!toggle)}>本を追加する</AddBookButton>
+              <Link1 to="/signin" onClick={signout}>サインアウト</Link1>
+            </Links>
+            <Hamburger addBook={() => setToggle(!toggle)}/>
+          </>
+        }
+      </Wrapper0>
     </Base>
   )
 }
