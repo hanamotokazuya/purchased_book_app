@@ -11,9 +11,9 @@ const Base = styled.div`
 
 function DisplayPieChart() {
   const {
-    state: { showBooks },
+    state: { books },
   } = useContext(AppContext);
-  const dataForPieChart = dataFormatForPieChart(showBooks);
+  const dataForPieChart = dataFormatForPieChart(books);
   const COLORS = ["#adff2f", "#00bfff", "#ffa500", "#ee82ee", "#ffff00", "#9932cc", "#4b0082"];
 
   return (

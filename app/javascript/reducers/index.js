@@ -11,6 +11,7 @@ import {
 const events = (state = [], action) => {
   let isSignIn = false;
   let currentUser = {};
+  let books = [];
   let showBooks = [];
   switch(action.type) {
     case SEARCH_EVENT:
@@ -18,7 +19,6 @@ const events = (state = [], action) => {
       const keyword = action.searchKeyword
       const category = action.searchCategory
       const keywordRegExp = keyword && keyword !== "" ? new RegExp(keyword, "ui") : /\S+/
-      let showBooks = []
       if (!category || category === "すべて") {
         showBooks = state.books.filter((book) => keywordRegExp.test(book.title))
       } else {
@@ -50,12 +50,16 @@ const events = (state = [], action) => {
       }
       return { ...state, isSignIn, currentUser }
     case SHOW_BOOK_EVENT:
-      showBooks = action.showBooks;
+      books = action.books;
+      showBooks = [...books];
       console.log("DISPATCH! SHOW_BOOK_EVENT!")
-      return { ...state, showBooks }
+      return { ...state, books, showBooks }
     case CREATE_BOOK_EVENT:
       console.log("DISPATCH! CREATE_BOOK_EVENT!")
-      return { ...state, showBooks: [action.book, ...state.showBooks] }
+      books = [action.book, ...state.books];
+      showBooks = [...books]
+      // return { ...state, showBooks: [action.book, ...state.showBooks] }
+      return { ...state, books, showBooks }
     case DELETE_BOOK_EVENT:
       console.log("DISPATCH! DELETE_BOOK_EVENT!")
       return { ...state, showBooks: [...state.showBooks].filter((book) => book.id !== action.id)}

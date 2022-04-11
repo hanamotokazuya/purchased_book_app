@@ -46,10 +46,10 @@ function App() {
     state.isSignIn && axios.get("/api/v1/books/index")
       .then(res => {
         if(res.data){
-          dispatch({ type: SHOW_BOOK_EVENT, showBooks: res.data })
+          dispatch({ type: SHOW_BOOK_EVENT, books: res.data })
       }
     })
-  }, [state.isSignIn, state.books])
+  }, [state.isSignIn])
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

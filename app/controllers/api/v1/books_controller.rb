@@ -14,7 +14,6 @@ class Api::V1::BooksController < ApplicationController
             )
             book.image.attach(blob)
             url_book = url_for(book.image)
-            debugger
             book[:url] =  url_book
         end
         if book.save
