@@ -62,7 +62,10 @@ const events = (state = [], action) => {
       return { ...state, books, showBooks }
     case DELETE_BOOK_EVENT:
       console.log("DISPATCH! DELETE_BOOK_EVENT!")
-      return { ...state, showBooks: [...state.showBooks].filter((book) => book.id !== action.id)}
+      return ({ ...state,
+                books: [...state.books].filter((book) => book.id !== action.id),
+                showBooks: [...state.showBooks].filter((book) => book.id !== action.id)
+              })
     default:
       return state;
   }

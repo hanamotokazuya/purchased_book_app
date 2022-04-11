@@ -17,15 +17,6 @@ const Base = styled.header`
   z-index: 10;
   background-color: #111111;
   width: 100%;
-  ${pc`
-  height: 92px;
-  `}
-  ${tab`
-  height: 76px;
-  `}
-  ${sp`
-  height: 76px;
-  `}
 `
 const Wrapper0 = styled.div`
   margin: 0 auto;
@@ -39,6 +30,15 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
+  ${pc`
+  height: 72px;
+  `}
+  ${tab`
+  height: 56px;
+  `}
+  ${sp`
+  height: 56px;
+  `}
 `
 
 const Logo = styled.div`
@@ -169,24 +169,24 @@ function Header() {
   return (
     <Base>
       <Wrapper0>
-      <Wrapper>
-        <Logo> <p>書籍<br/>管理</p> </Logo>
-        {!!user &&
-          <>
-            <UpDownAnime style={spring}>
-              <CreateBook close={() => setToggle(!toggle)}/>
-            </UpDownAnime>
-            <Routes>
-              <Route path="/books" element={ <SearchBar />} />
-              <Route path="*" element={ <Outlet /> } />
-            </Routes>
-            <Routes>
-              <Route path="/books" element={<ResultBookCount>{resultBookCount}</ResultBookCount>}/>
-              <Route path="*" element={ <Blank /> } />
-            </Routes>
-          </>
-        }
-      </Wrapper>
+        <Wrapper>
+          <Logo> <p>書籍<br/>管理</p> </Logo>
+          {!!user &&
+            <>
+              <UpDownAnime style={spring}>
+                <CreateBook close={() => setToggle(!toggle)}/>
+              </UpDownAnime>
+              <Routes>
+                <Route path="/books" element={ <SearchBar />} />
+                <Route path="*" element={ <Outlet /> } />
+              </Routes>
+              <Routes>
+                <Route path="/books" element={<ResultBookCount>{resultBookCount}</ResultBookCount>}/>
+                <Route path="*" element={ <Blank /> } />
+              </Routes>
+            </>
+          }
+        </Wrapper>
         {!!user &&
           <>
             <Links>
