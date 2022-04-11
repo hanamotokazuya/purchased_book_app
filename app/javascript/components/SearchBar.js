@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import AppContext from '../contexts/AppContext'
 import styled from 'styled-components'
-import { SEARCH_EVENT } from '../actions'
+import { SEARCH_EVENT, CATEGORIES } from '../constants'
 
 const SearchForm = styled.form`
   font-size: 12px;
@@ -43,13 +43,7 @@ function SearchBar() {
       <Wrapper>
         <CategorySelect onChange={(e) => setSearchCategory(e.target.value)}>
           <option>すべて</option>
-          <option>制御</option>
-          <option>プログラミング</option>
-          <option>信号処理</option>
-          <option>自動車</option>
-          <option>機械学習</option>
-          <option>数学</option>
-          <option>その他</option>
+          {CATEGORIES.map((category, key) => <option key={key}>{category}</option>)}
         </CategorySelect>
         <SearchButton onClick={handleClickSearchBook}>検索</SearchButton>
       </Wrapper>

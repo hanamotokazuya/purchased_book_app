@@ -3,9 +3,11 @@ import AppContext from '../contexts/AppContext'
 import styled from 'styled-components'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { CREATE_BOOK_EVENT } from '../actions'
+import { CREATE_BOOK_EVENT, CATEGORIES } from '../constants'
 import { useNavigate } from 'react-router-dom'
 import { CgClose } from 'react-icons/cg'
+
+
 const Base = styled.div`
   position: absolute;
   top: 50%;
@@ -127,13 +129,7 @@ function CreateBook({ close }) {
           <TitleInput type="text" value={title} placeholder="本のタイトルを入力してください" onChange={(e) => setTitle(e.target.value)} />
           <CategorySelect value={category}onChange={(e) => setCategory(e.target.value)}>
             <option hidden>選択してください</option>
-            <option>制御</option>
-            <option>プログラミング</option>
-            <option>信号処理</option>
-            <option>自動車</option>
-            <option>機械学習</option>
-            <option>数学</option>
-            <option>その他</option>
+            {CATEGORIES.map((category, key) => <option key={key}>{category}</option>)}
           </CategorySelect>
           <FileField type="file" accept='image/*,.png,.jpg,.jpeg,.gif' onChange={getImage}/>
           <SubmitButton onClick={handleClickSubmitBook}>追加</SubmitButton>

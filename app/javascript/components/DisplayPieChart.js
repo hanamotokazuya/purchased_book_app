@@ -26,6 +26,9 @@ function DisplayPieChart() {
     </Base>
   );
 }
+
+
+
 // 購入書籍のデータをパイチャートで使用できるフォーマットに変換する関数
 function dataFormatForPieChart(books) {
   const countMap = new Map();

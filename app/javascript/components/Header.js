@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { SIGN_OUT_EVENT } from '../actions'
-import styled from 'styled-components'
-import UserInput from './UserInput'
-import AppContext from '../contexts/AppContext'
-import useInterval from '../utils/useInterval'
 import { Routes, Route, Link as Li, Outlet } from 'react-router-dom'
+import { useSpring, animated } from 'react-spring'
+import styled from 'styled-components'
 import axios from 'axios'
 import { pc, tab, sp } from '../utils/media'
+import { SIGN_OUT_EVENT } from '../constants'
+import AppContext from '../contexts/AppContext'
+import useInterval from '../utils/useInterval'
 import Hamburger from './Hamburger'
-import { useSpring, animated } from 'react-spring'
 import CreateBook from './CreateBook'
 import SearchBar from './SearchBar'
 
@@ -18,7 +17,7 @@ const Base = styled.header`
   background-color: #111111;
   width: 100%;
 `
-const Wrapper0 = styled.div`
+const Wrapper = styled.div`
   margin: 0 auto;
   padding: 10px;
   max-width: 1024px;
@@ -26,7 +25,7 @@ const Wrapper0 = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-const Wrapper = styled.div`
+const LeftSide = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
@@ -97,7 +96,6 @@ const ResultBookCount = styled.p`
 const Blank = styled.div`
   margin: 0 auto;
 `
-// UserInput
 const Links = styled.div`
   display: flex;
   justify-content: right;
@@ -132,7 +130,7 @@ const UpDownAnime = styled(animated.div)`
   background: rgba(0, 0, 0, 0.6);
   z-index: 9999;
 `
-const Link1 = styled(Li)`
+const Link = styled(Li)`
   font-size: 14px;
   padding: 3px 10px;
   color: white;
@@ -145,12 +143,12 @@ const Link1 = styled(Li)`
 
 function Header() {
 
-  const { state: { showBooks, currentUser: { name: user } }, dispatch} = useContext(AppContext)
+  const { state: { showBooks, isSignIn }, dispatch} = useContext(AppContext)
   const [resultBookCount, setResultBookCount] = useState(0)
-  const [toggle, setToggle] = useState(false);
+  const [isOpenAddPage, setIsOpenAddPage] = useState(false);
   const spring = useSpring({
-    opacity: toggle ? "1" : "0",
-    display: toggle ? "block" : "none",
+    opacity: isOpenAddPage ? "1" : "0",
+    display: isOpenAddPage ? "block" : "none",
     config: {duration: 250 }
   })
   function countUpDown() {
@@ -168,13 +166,13 @@ function Header() {
 
   return (
     <Base>
-      <Wrapper0>
-        <Wrapper>
+      <Wrapper>
+        <LeftSide>
           <Logo> <p>書籍<br/>管理</p> </Logo>
-          {!!user &&
+          {isSignIn &&
             <>
               <UpDownAnime style={spring}>
-                <CreateBook close={() => setToggle(!toggle)}/>
+                <CreateBook close={() => setIsOpenAddPage(!isOpenAddPage)}/>
               </UpDownAnime>
               <Routes>
                 <Route path="/books" element={ <SearchBar />} />
@@ -186,19 +184,19 @@ function Header() {
               </Routes>
             </>
           }
-        </Wrapper>
-        {!!user &&
+        </LeftSide>
+        {isSignIn &&
           <>
             <Links>
-              <Link1 to="/books">本を並べる</Link1>
-              <Link1 to="/pie_chart">パイチャート</Link1>
-              <AddBookButton onClick={() => setToggle(!toggle)}>本を追加する</AddBookButton>
-              <Link1 to="/signin" onClick={signout}>サインアウト</Link1>
+              <Link to="/books">本を並べる</Link>
+              <Link to="/pie_chart">パイチャート</Link>
+              <AddBookButton onClick={() => setIsOpenAddPage(!isOpenAddPage)}>本を追加する</AddBookButton>
+              <Link to="/signin" onClick={signout}>サインアウト</Link>
             </Links>
-            <Hamburger addBook={() => setToggle(!toggle)}/>
+            <Hamburger signout={signout} addBook={() => setIsOpenAddPage(!isOpenAddPage)}/>
           </>
         }
-      </Wrapper0>
+      </Wrapper>
     </Base>
   )
 }

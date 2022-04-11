@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import AppContext from '../contexts/AppContext'
-import { DELETE_BOOK_EVENT } from '../actions'
+import { DELETE_BOOK_EVENT } from '../constants'
 import axios from 'axios'
 import { MdDeleteForever } from 'react-icons/md'
 import { pc, tab, sp } from '../utils/media'

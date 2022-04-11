@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Link as Li } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 import { IconContext } from 'react-icons'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import styled from 'styled-components'
-import AppContext from '../contexts/AppContext'
-import axios from 'axios'
 import { pc, tab, sp } from '../utils/media'
 
 const Base = styled.div`
@@ -62,19 +60,9 @@ const ItemB = styled.div`
 `
 
 
-function Hamburger({ addBook }) {
+function Hamburger({ signout, addBook }) {
   const [isOpenHam, SetIsOpenHam] = useState(false);
-  const MenuSpring = useSpring({
-    right: isOpenHam ? "0" : "-200px",
-  })
-  const { dispatch} = useContext(AppContext)
-
-  const signout = () => {
-    // sessionとcookiesを掃除する処理を書く
-    axios.delete("/api/v1/sessions/destroy")
-    // カレントユーザーのステートを初期化する
-    dispatch({ type: SIGN_OUT_EVENT })
-  }
+  const MenuSpring = useSpring({ right: isOpenHam ? "0" : "-200px" })
   return (
     <Base>
       <IconContext.Provider value={{ color: '#eaeded', size: '64px' }}>

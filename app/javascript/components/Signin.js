@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import AppContext from '../contexts/AppContext'
-import { SIGN_IN_EVENT } from '../actions'
+import { SIGN_IN_EVENT } from '../constants'
 import { useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
