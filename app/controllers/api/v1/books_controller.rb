@@ -7,7 +7,7 @@ class Api::V1::BooksController < ApplicationController
 # Rails.application.routes.url_helpers.rails_representation_url(book.image.variant({}), only_path: true)
     def create
         book = current_user.books.build(book_params)
-        if params[:book][:image]
+        if book.valid? && params[:book][:image]
             blob = ActiveStorage::Blob.create_after_upload!(
                 io: StringIO.new(decode(params[:book][:image][:data]) + "\n"),
                 filename: params[:book][:image][:name]

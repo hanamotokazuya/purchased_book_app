@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import UserInput from './UserInput'
 import AppContext from '../contexts/AppContext'
 import useInterval from '../utils/useInterval'
-import { Link } from 'react-router-dom'
+import { Link as Li } from 'react-router-dom'
 import axios from 'axios'
 
 const Base = styled.header`
@@ -14,7 +14,6 @@ const Base = styled.header`
   justify-content: center;
   margin: 0 auto;
 `
-
 const Wrapper = styled.div`
   padding: 10px;
   width: 85%;
@@ -50,7 +49,23 @@ const ResultBookCount = styled.p`
     font-size: 32px;
   }
 `
-
+const Link = styled(Li)`
+  color: white;
+  background-color: #337ab7;
+  margin-right: 10px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #eb6100;
+  }
+`
+const LinkWrapper = styled.div`
+  height: 100%;
+  padding: 5px;
+`
 function Header() {
 
   const { state: { showBooks, currentUser: { name: user } }, dispatch} = useContext(AppContext)
@@ -79,7 +94,9 @@ function Header() {
           <>
             <UserInput />
             <ResultBookCount>{resultBookCount}</ResultBookCount>
-            <Link to="/signin" onClick={signout}>サインアウト</Link>
+            <LinkWrapper>
+              <Link to="/signin" onClick={signout}>サインアウト</Link>
+            </LinkWrapper>
           </>
         }
       </Wrapper>

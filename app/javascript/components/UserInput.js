@@ -1,28 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import {Routes, Route, Link, Outlet } from 'react-router-dom'
+import {Routes, Route, Link as Li, Outlet } from 'react-router-dom'
 import SearchBar from './SearchBar'
+import CreateBook from './CreateBook'
+import { useSpring, animated } from 'react-spring'
 
 const Base = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const Wrapper = styled.div`
+  width: 100%;
+  max-width: 460px;
+  height: 100%;
   margin-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: left;
   align-items: flex-start;
 `
-
 const Links = styled.div`
   padding: 5px;
   display: flex;
   justify-content: space-between;
 `
 
-const Button = styled.button`
+const AddBookButton = styled.button`
   margin-right: 10px;
   padding: 3px 10px;
   border-radius: 5px;
@@ -30,30 +29,59 @@ const Button = styled.button`
   color: #000000;
   font-weight: bold;
   border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #eb6100;
+  }
 `
-
+const UpDownAnime = styled(animated.div)`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+`
+const Link = styled(Li)`
+  margin-right: 10px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  background-color: #eaeded;
+  color: #000000;
+  font-weight: bold;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #eb6100;
+  }
+`
 function UserInput() {
+  const [toggle, setToggle] = useState(false);
+  const spring = useSpring({
+    opacity: toggle ? "1" : "0",
+    display: toggle ? "block" : "none",
+    config: {duration: 250 }
+  })
 
   return (
-    <Base>
-      <Wrapper>
-        <Links>
-        <Button>
-          <Link to="/books">本を並べる</Link>
-        </Button>
-        <Button>
-          <Link to="/pie_chart">パイチャート</Link>
-        </Button>
-        <Button>
-          <Link to="/books/new">本を追加する</Link>
-        </Button>
-        </Links>
-        <Routes>
-          <Route path="/books" element={ <SearchBar />} />
-          <Route path="*" element={ <Outlet /> } />
-        </Routes>
-      </Wrapper>
-    </Base>
+    <>
+      <UpDownAnime style={spring}>
+        <CreateBook close={() => setToggle(!toggle)}/>
+      </UpDownAnime>
+      <Base>
+          <Links>
+            <Link to="/books">本を並べる</Link>
+            <Link to="/pie_chart">パイチャート</Link>
+            <AddBookButton onClick={() => setToggle(!toggle)}>本を追加する</AddBookButton>
+          </Links>
+          <Routes>
+            <Route path="/books" element={ <SearchBar />} />
+            <Route path="*" element={ <Outlet /> } />
+          </Routes>
+      </Base>
+    </>
   )
 }
 
