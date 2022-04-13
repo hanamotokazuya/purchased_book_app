@@ -1,14 +1,12 @@
-import React, {useContext } from 'react'
-import { Routes, Route, Outlet } from 'react-router-dom'
-import DisplayBook from './DisplayBook'
-import DisplayPieChart from './DisplayPieChart'
-import styled from 'styled-components'
-import Signup from './Signup'
-import Signin from './Signin'
-import CreateBook from './CreateBook'
-import AppContext from '../contexts/AppContext'
-import { pc, tab, sp } from '../utils/media'
-
+import React, { useContext } from "react";
+import { Routes, Route, Outlet } from "react-router-dom";
+import DisplayBook from "./DisplayBook";
+import DisplayPieChart from "./DisplayPieChart";
+import styled from "styled-components";
+import Signup from "./Signup";
+import Signin from "./Signin";
+import AppContext from "../contexts/AppContext";
+import { pc, tab, sp } from "../utils/media";
 
 const Base = styled.div`
   background-color: #33b913;
@@ -23,7 +21,7 @@ const Base = styled.div`
   ${sp`
     transform: translateY(76px);
   `}
-`
+`;
 const Wrapper = styled.div`
   width: 95%;
   margin: 0 auto;
@@ -35,29 +33,33 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-`
+`;
 function Display() {
-  const {state: { currentUser: { name: user } } } = useContext(AppContext);
+  const {
+    state: {
+      currentUser: { name: user },
+    },
+  } = useContext(AppContext);
   return (
     <Base>
       <Wrapper>
-        {!!user ?
+        {!!user ? (
           <Routes>
             <Route path="/books" element={<DisplayBook />} />
-            <Route path="/books/new" element={<CreateBook />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/pie_chart" element={<DisplayPieChart />}/>
-            <Route path="*" element={ <Outlet /> } />
-          </Routes> :
+            <Route path="/pie_chart" element={<DisplayPieChart />} />
+            <Route path="*" element={<Outlet />} />
+          </Routes>
+        ) : (
           <Routes>
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={ <Outlet /> } />
+            <Route path="*" element={<Outlet />} />
           </Routes>
-        }
+        )}
       </Wrapper>
     </Base>
-  )
+  );
 }
 
-export default Display
+export default Display;

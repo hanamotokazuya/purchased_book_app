@@ -3,21 +3,21 @@ import AppContext from "../contexts/AppContext";
 import PieChartLegends from "./PieChartLegends";
 import PieChartFig from "./PieChartFig";
 import styled from "styled-components";
+import { COLORS } from "../constants";
 
 const Base = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content:left;
+  justify-content: left;
   align-items: center;
-`
+`;
 
 function DisplayPieChart() {
   const {
     state: { books },
   } = useContext(AppContext);
   const dataForPieChart = dataFormatForPieChart(books);
-  const COLORS = ["#adff2f", "#00bfff", "#ffa500", "#ee82ee", "#ffff00", "#9932cc", "#4b0082"];
 
   return (
     <Base>
@@ -27,21 +27,20 @@ function DisplayPieChart() {
   );
 }
 
-
-
 // 購入書籍のデータをパイチャートで使用できるフォーマットに変換する関数
-function dataFormatForPieChart(books) {
-  const countMap = new Map();
+function dataFormatForPieChart(books: Book[]): PieChartFormat[] {
+  const countMap: Map<string, number> = new Map();
   // カテゴリー毎の書籍数をカウント
   books.map((book) => {
-    if (!countMap.has(book.category)) {
+    const n = countMap.get(book.category);
+    if (!(typeof n === "number")) {
       countMap.set(book.category, 1);
     } else {
-      countMap.set(book.category, countMap.get(book.category) + 1);
+      countMap.set(book.category, n + 1);
     }
   });
   // パイチャートで使用できるフォーマットに変換
-  const data = [];
+  const data: PieChartFormat[] = [];
   [...countMap].forEach(([name, value], index) => (data[index] = { index, name, value }));
   // 冊数の多い順でソート
   data.sort((a, b) => b.value - a.value);
@@ -49,4 +48,3 @@ function dataFormatForPieChart(books) {
 }
 
 export default DisplayPieChart;
-

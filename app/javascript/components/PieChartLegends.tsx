@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { pc, tab, sp } from '../utils/media'
+import { pc, tab, sp } from "../utils/media";
 
 const LegendItems = styled.div`
   width: 80%;
@@ -8,10 +8,10 @@ const LegendItems = styled.div`
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-`
+`;
 const LegendItem = styled.div`
   display: flex;
-  align-items:center;
+  align-items: center;
   ${pc`
     margin-bottom: 10px;
   `}
@@ -21,7 +21,7 @@ const LegendItem = styled.div`
   ${sp`
     margin-bottom: 6px;
   `}
-`
+`;
 const LegendColor = styled.div`
   border-radius: 5px;
   ${pc`
@@ -39,7 +39,7 @@ const LegendColor = styled.div`
     height: 10px;
     margin-right: 3px;
   `}
-`
+`;
 const LegendName = styled.p`
   ${pc`
     font-size: 16px;
@@ -54,10 +54,13 @@ const LegendName = styled.p`
     font-size: 12px;
     margin-right: 4px;
   `}
-`
+`;
 
-
-function PieChartLegends({ data, colors }) {
+type Props = {
+  data: PieChartFormat[];
+  colors: string[];
+};
+function PieChartLegends({ data, colors }: Props) {
   return (
     <LegendItems>
       {data.map((entry, index) => (

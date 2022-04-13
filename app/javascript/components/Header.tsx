@@ -1,22 +1,21 @@
-import React, { useContext, useState } from 'react'
-import { Routes, Route, Link as Li, Outlet } from 'react-router-dom'
-import { useSpring, animated } from 'react-spring'
-import styled from 'styled-components'
-import axios from 'axios'
-import { pc, tab, sp } from '../utils/media'
-import { SIGN_OUT_EVENT } from '../constants'
-import AppContext from '../contexts/AppContext'
-import useInterval from '../utils/useInterval'
-import Hamburger from './Hamburger'
-import CreateBook from './CreateBook'
-import SearchBar from './SearchBar'
+import React, { useContext, useState } from "react";
+import { Routes, Route, Link as Li, Outlet } from "react-router-dom";
+import { useSpring, animated } from "react-spring";
+import styled from "styled-components";
+import axios from "axios";
+import { pc, tab, sp } from "../utils/media";
+import AppContext from "../contexts/AppContext";
+import useInterval from "../utils/useInterval";
+import Hamburger from "./Hamburger";
+import CreateBook from "./CreateBook";
+import SearchBar from "./SearchBar";
 
 const Base = styled.header`
   position: fixed;
   z-index: 10;
   background-color: #111111;
   width: 100%;
-`
+`;
 const Wrapper = styled.div`
   margin: 0 auto;
   padding: 10px;
@@ -24,7 +23,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 const LeftSide = styled.div`
   display: flex;
   justify-content: left;
@@ -38,7 +37,7 @@ const LeftSide = styled.div`
   ${sp`
   height: 56px;
   `}
-`
+`;
 
 const Logo = styled.div`
   border-color: #eaeded;
@@ -66,7 +65,7 @@ const Logo = styled.div`
     height: 16px;
     font-size: 8px;
   `}
-`
+`;
 
 const ResultBookCount = styled.p`
   color: #eaeded;
@@ -92,10 +91,10 @@ const ResultBookCount = styled.p`
       font-size: 8px;
     }
   `}
-`
+`;
 const Blank = styled.div`
   margin: 0 auto;
-`
+`;
 const Links = styled.div`
   display: flex;
   justify-content: right;
@@ -108,7 +107,7 @@ const Links = styled.div`
   ${sp`
     display: none;
   `}
-`
+`;
 
 const AddBookButton = styled.button`
   color: white;
@@ -120,7 +119,7 @@ const AddBookButton = styled.button`
   &:hover {
     background-color: #eb6100;
   }
-`
+`;
 const UpDownAnime = styled(animated.div)`
   position: fixed;
   width: 100%;
@@ -129,7 +128,7 @@ const UpDownAnime = styled(animated.div)`
   left: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 9999;
-`
+`;
 const Link = styled(Li)`
   font-size: 14px;
   padding: 3px 10px;
@@ -139,66 +138,81 @@ const Link = styled(Li)`
   &:hover {
     background-color: #eb6100;
   }
-`
+`;
 
 function Header() {
-
-  const { state: { showBooks, isSignIn }, dispatch} = useContext(AppContext)
-  const [resultBookCount, setResultBookCount] = useState(0)
+  const {
+    state: { showBooks, isSignIn },
+    dispatch,
+  } = useContext(AppContext);
+  const [resultBookCount, setResultBookCount] = useState(0);
   const [isOpenAddPage, setIsOpenAddPage] = useState(false);
   const spring = useSpring({
     opacity: isOpenAddPage ? "1" : "0",
     display: isOpenAddPage ? "block" : "none",
-    config: {duration: 250 }
-  })
+    config: { duration: 250 },
+  });
   function countUpDown() {
-    resultBookCount < showBooks.length && setResultBookCount(resultBookCount + 1)
-    resultBookCount > showBooks.length && setResultBookCount(resultBookCount - 1)
+    resultBookCount < showBooks.length && setResultBookCount(resultBookCount + 1);
+    resultBookCount > showBooks.length && setResultBookCount(resultBookCount - 1);
   }
 
   const signout = () => {
     // sessionとcookiesを掃除する処理を書く
-    axios.delete("/api/v1/sessions/destroy")
+    axios.delete("/api/v1/sessions/destroy");
     // カレントユーザーのステートを初期化する
-    dispatch({ type: SIGN_OUT_EVENT })
-  }
+    dispatch({ type: "SIGN_OUT_EVENT" });
+  };
   useInterval(countUpDown, 10);
 
   return (
     <Base>
       <Wrapper>
         <LeftSide>
-          <Logo> <p>書籍<br/>管理</p> </Logo>
-          {isSignIn &&
+          <Logo>
+            <p>
+              書籍
+              <br />
+              管理
+            </p>
+          </Logo>
+          {isSignIn && (
             <>
               <UpDownAnime style={spring}>
-                <CreateBook close={() => setIsOpenAddPage(!isOpenAddPage)}/>
+                <CreateBook close={() => setIsOpenAddPage(!isOpenAddPage)} />
               </UpDownAnime>
               <Routes>
-                <Route path="/books" element={ <SearchBar />} />
-                <Route path="*" element={ <Outlet /> } />
+                <Route path="/books" element={<SearchBar />} />
+                <Route path="*" element={<Outlet />} />
               </Routes>
               <Routes>
-                <Route path="/books" element={<ResultBookCount>{resultBookCount}</ResultBookCount>}/>
-                <Route path="*" element={ <Blank /> } />
+                <Route
+                  path="/books"
+                  element={<ResultBookCount>{resultBookCount}</ResultBookCount>}
+                />
+                <Route path="*" element={<Blank />} />
               </Routes>
             </>
-          }
+          )}
         </LeftSide>
-        {isSignIn &&
+        {isSignIn && (
           <>
             <Links>
               <Link to="/books">本を並べる</Link>
               <Link to="/pie_chart">パイチャート</Link>
-              <AddBookButton onClick={() => setIsOpenAddPage(!isOpenAddPage)}>本を追加する</AddBookButton>
-              <Link to="/signin" onClick={signout}>サインアウト</Link>
+              <AddBookButton onClick={() => setIsOpenAddPage(!isOpenAddPage)}>
+                本を追加する
+              </AddBookButton>
+              <Link to="/signin" onClick={signout}>
+                サインアウト
+              </Link>
             </Links>
-            <Hamburger signout={signout} addBook={() => setIsOpenAddPage(!isOpenAddPage)}/>
+            <Hamburger signout={signout} addBook={() => setIsOpenAddPage(!isOpenAddPage)} />
           </>
-        }
+        )}
       </Wrapper>
     </Base>
-  )
+  );
 }
 
-export default Header
+export default Header;

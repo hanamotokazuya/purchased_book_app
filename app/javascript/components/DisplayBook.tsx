@@ -1,12 +1,9 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
-import AppContext from '../contexts/AppContext'
-import { DELETE_BOOK_EVENT } from '../constants'
-import axios from 'axios'
-import { MdDeleteForever } from 'react-icons/md'
-import { pc, tab, sp } from '../utils/media'
-
-
+import React, { useContext } from "react";
+import styled from "styled-components";
+import AppContext from "../contexts/AppContext";
+import axios from "axios";
+import { MdDeleteForever } from "react-icons/md";
+import { pc, tab, sp } from "../utils/media";
 
 const BookLists = styled.ul`
   display: flex;
@@ -14,7 +11,7 @@ const BookLists = styled.ul`
   flex-direction: row;
   flex-wrap: wrap;
   padding: 0;
-`
+`;
 
 const BookList = styled.li`
   list-style: none;
@@ -34,7 +31,7 @@ const BookList = styled.li`
     width: 95px;
     height: ${95 * 1.41}px;
   `}
-`
+`;
 const DeleteIcon = styled(MdDeleteForever)`
   cursor: pointer;
   position: absolute;
@@ -50,38 +47,42 @@ const DeleteIcon = styled(MdDeleteForever)`
     top: 3px;
     right: 7px;
   `}
-`
+`;
 
 const BookImage = styled.img`
-  width:100%;
+  width: 100%;
   height: 100%;
-`
+`;
 
 function DisplayBook() {
-  const {state: { showBooks }, dispatch } = useContext(AppContext);
-  const handleClickBookDelete = (book) => {
-    const isDelete = window.confirm(`${book.title}を削除してよろしいですか？`)
-    if(isDelete) {
-      axios.delete(`/api/v1/books/destroy/${book.id}`)
-      .then(() => {
-        dispatch({ type: DELETE_BOOK_EVENT, id: book.id })
-      })
-      .catch((e) => {
-        console.log(e)
-      })
+  const {
+    state: { showBooks },
+    dispatch,
+  } = useContext(AppContext);
+  const handleClickBookDelete = (book: Book) => {
+    const isDelete = window.confirm(`${book.title}を削除してよろしいですか？`);
+    if (isDelete) {
+      axios
+        .delete(`/api/v1/books/destroy/${book.id}`)
+        .then(() => {
+          dispatch({ type: "DELETE_BOOK_EVENT", id: book.id });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
-  }
+  };
   return (
     <BookLists>
       {!showBooks.length && <p>本がありません。</p>}
-      {showBooks.map((book, key) => (
+      {showBooks.map((book: Book, key: number) => (
         <BookList key={key}>
-          <BookImage src={book.url}/>
+          <BookImage src={book.url} />
           <DeleteIcon onClick={() => handleClickBookDelete(book)} />
         </BookList>
       ))}
     </BookLists>
-  )
+  );
 }
 
-export default DisplayBook
+export default DisplayBook;
