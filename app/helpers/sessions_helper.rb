@@ -25,6 +25,10 @@ module SessionsHelper
 
     # 現在ログイン中のユーザの情報を返す
     def current_user
+        logger.debug "session: #{session.inspect}"
+        logger.debug "session.user_id: #{session[:user_id]}"
+        logger.debug "params: #{params}"
+        logger.debug "cookies: #{cookies}"
         if (user_id = session[:user_id])
             @current_user ||= User.find_by(id: user_id)
         elsif (user_id = cookies.signed[:user_id])
