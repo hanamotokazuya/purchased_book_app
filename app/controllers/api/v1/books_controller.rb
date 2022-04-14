@@ -1,31 +1,31 @@
 class Api::V1::BooksController < ApplicationController
 
     def index
-        books = current_user.books.all
-        render json: books
+        @books = current_user.books.all
+        render json: @books
     end
 # Rails.application.routes.url_helpers.rails_representation_url(book.image.variant({}), only_path: true)
     def create
-        book = current_user.books.build(book_params)
-        if book.valid? && params[:book][:image]
+        @book = current_user.books.build(book_params)
+        if @book.valid? && params[:book][:image]
             blob = ActiveStorage::Blob.create_after_upload!(
                 io: StringIO.new(decode(params[:book][:image][:data]) + "\n"),
                 filename: params[:book][:image][:name]
             )
-            book.image.attach(blob)
-            url_book = url_for(book.image)
-            book[:url] =  url_book
+            @book.image.attach(blob)
+            url_book = url_for(@book.image)
+            @book[:url] =  url_book
         end
-        if book.save
-            render json: book
+        if @book.save
+            render json: @book
         else
-            render json: book.errors.full_messages
+            render json: @book.errors.full_messages
         end
     end
 
     def destroy
-        book = current_user.books.find_by(id: params[:id])
-        if book.destroy
+        @book = current_user.books.find_by(id: params[:id])
+        if @book.destroy
             head :no_content
         else
             render json: { error: "Failed to destroy" }, status: 422

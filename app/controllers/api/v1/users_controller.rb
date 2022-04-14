@@ -2,31 +2,31 @@ class Api::V1::UsersController < ApplicationController
     # ユーザーの管理を行う
     # APIとしてふるまうので，JSONデータを出力するようにする。
     def index
-        users = User.all
-        render json: users
+        @users = User.all
+        render json: @users
     end
 
     def show
-        user = User.find(params[:id])
-        render json: user
+        @user = User.find(params[:id])
+        render json: @user
     end
 
     def create
-        user = User.new(user_params)
-        if user.save
-            log_in user
-            render json: user
+        @user = User.new(user_params)
+        if @user.save
+            log_in @user
+            render json: @user
         else
-            render json: user.errors.full_messages
+            render json: @user.errors.full_messages
         end
     end
 
     def update
-        user = User.find(params[:id])
-        if user.update(user_params)
-            render json: user
+        @user = User.find(params[:id])
+        if @user.update(user_params)
+            render json: @user
         else
-            render json: user.errors, status: 422
+            render json: @user.errors, status: 422
         end
     end
 
