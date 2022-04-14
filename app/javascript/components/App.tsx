@@ -4,7 +4,7 @@ import React, { useReducer, useEffect } from "react";
 import Header from "./Header";
 import Display from "./Display";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 

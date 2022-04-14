@@ -13,11 +13,14 @@
  *= require_tree .
  *= require_self
  */
+@import "react-toastify/dist/ReactToastify.css";
 
 /*
   1. より直感的なボックスサイズのモデルを使用
 */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 /*
@@ -29,7 +32,8 @@
 /*
   3. 高さは%ベースを使用
 */
-html, body {
+html,
+body {
   height: 100vh;
 }
 /*
@@ -44,20 +48,33 @@ body {
 /*
   6. メディア要素のデフォルトを改善
 */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 /*
   7. フォームのfontに関するデフォルトを削除
 */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 /*
   8. テキストのオーバーフローを回避
 */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 /*
@@ -71,7 +88,6 @@ p, h1, h2, h3, h4, h5, h6 {
 /* miscellaneous */
 
 .debug_dump {
-
   width: 100%;
   color: white;
   font-size: 16px;
