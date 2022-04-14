@@ -1,8 +1,8 @@
 class Api::V1::BooksController < ApplicationController
 
     def index
-        @books = current_user.books.all
-        render json: @books
+        # @books = current_user.books.all
+        # render json: @books
     end
 # Rails.application.routes.url_helpers.rails_representation_url(book.image.variant({}), only_path: true)
     def create
