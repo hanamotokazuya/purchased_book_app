@@ -95,7 +95,6 @@ function Signup() {
       .post("/api/v1/users", { user: data })
       .then((res) => {
         if (!Array.isArray(res.data)) {
-          console.log(res.data);
           dispatch({
             type: "CREATE_USER_EVENT",
             name: res.data.name,

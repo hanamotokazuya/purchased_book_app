@@ -60,21 +60,32 @@ const ItemB = styled.div`
 `;
 
 type Props = {
-  signout: React.MouseEventHandler;
-  addBook: React.MouseEventHandler;
+  signout: () => void;
+  addBook: () => void;
 };
 
 function Hamburger({ signout, addBook }: Props) {
-  const [isOpenHam, SetIsOpenHam] = useState(false);
+  const [isOpenHam, setIsOpenHam] = useState(false);
   const MenuSpring = useSpring({ right: isOpenHam ? "0" : "-200px" });
   return (
     <Base>
       <IconContext.Provider value={{ color: "#eaeded", size: "64px" }}>
-        <Menu onClick={() => SetIsOpenHam(!isOpenHam)} />
+        <Menu onClick={() => setIsOpenHam(!isOpenHam)} />
         <MenuItems style={MenuSpring}>
-          <ItemL to="/books">本を並べる</ItemL>
-          <ItemL to="/pie_chart">パイチャート</ItemL>
-          <ItemB onClick={addBook}>本を追加する</ItemB>
+          <ItemL onClick={() => setIsOpenHam(!isOpenHam)} to="/books">
+            本を並べる
+          </ItemL>
+          <ItemL onClick={() => setIsOpenHam(!isOpenHam)} to="/pie_chart">
+            パイチャート
+          </ItemL>
+          <ItemB
+            onClick={() => {
+              addBook();
+              setIsOpenHam(!isOpenHam);
+            }}
+          >
+            本を追加する
+          </ItemB>
           <ItemL to="/signin" onClick={signout}>
             サインアウト
           </ItemL>

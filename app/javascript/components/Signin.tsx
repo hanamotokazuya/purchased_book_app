@@ -101,13 +101,10 @@ function SignIn() {
       password: password,
       remember_me: isRemember,
     };
-    console.log("point 1");
     axios
       .post("/api/v1/sessions/create", { session: data }, { withCredentials: true })
       .then((res) => {
-        console.log("point 2");
         if (res.data && !Array.isArray(res.data)) {
-          console.log(res.data);
           dispatch({
             type: "SIGN_IN_EVENT",
             name: res.data.name,

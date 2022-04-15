@@ -29,10 +29,13 @@ class Api::V1::BooksController < ApplicationController
 
     def destroy
         @book = current_user.books.find_by(id: params[:id])
-        if @book.destroy
-            head :no_content
-        else
-            render json: { error: "Failed to destroy" }, status: 422
+        if @book.image.attached?
+            @book.image.purge
+            if @book.destroy
+                head :no_content
+            else
+                render json: { error: "Failed to destroy" }, status: 422
+            end
         end
     end
 

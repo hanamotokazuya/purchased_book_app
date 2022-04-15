@@ -77,7 +77,8 @@ const ErrorMessage = styled.p`
 `;
 
 type Props = {
-  close: React.MouseEventHandler;
+  close: () => void;
+  // close: React.MouseEventHandler;
 };
 function CreateBook({ close }: Props) {
   const { dispatch } = useContext(AppContext);
@@ -108,7 +109,6 @@ function CreateBook({ close }: Props) {
       .then((res: AxiosResponse<Book | Array<string>>) => {
         const { data } = res;
         if (!Array.isArray(data)) {
-          console.log(res.data);
           dispatch({
             type: "CREATE_BOOK_EVENT",
             book: data,
@@ -117,6 +117,7 @@ function CreateBook({ close }: Props) {
           setTitle("");
           setCategory("");
           setImage({ data: "", name: "" });
+          close();
           navigate("/books");
         } else {
           setErrors(data);
@@ -130,7 +131,7 @@ function CreateBook({ close }: Props) {
     <Base>
       <Wrapper>
         <Icon>
-          <CgClose style={{ cursor: "pointer" }} onClick={close} />
+          <CgClose style={{ cursor: "pointer" }} onClick={() => close()} />
         </Icon>
         <CreateBookForm>
           <TitleInput
