@@ -13,7 +13,11 @@ class Api::V1::BooksController < ApplicationController
                 filename: params[:book][:image][:name]
             )
             @book.image.attach(blob)
-            url_book = url_for(@book.image)
+            if Rails.env.production?
+                url_book = @book.image.attachment.service.send(:object_for, @book.image.key).public_url
+            else
+                url_book = url_for(@book.image)
+            end
             @book[:url] =  url_book
         end
         if @book.save
