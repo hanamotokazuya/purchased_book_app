@@ -7,6 +7,11 @@ import { CATEGORIES } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 
+axios.defaults.headers.common = {
+  "X-Requested-With": "XMLHttpRequest",
+  "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+};
+
 const Base = styled.div`
   position: absolute;
   top: 50%;

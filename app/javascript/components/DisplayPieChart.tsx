@@ -41,7 +41,7 @@ function dataFormatForPieChart(books: Book[]): PieChartFormat[] {
   });
   // パイチャートで使用できるフォーマットに変換
   const data: PieChartFormat[] = [];
-  [...countMap].forEach(([name, value], index) => (data[index] = { index, name, value }));
+  Array.from(countMap).forEach(([name, value], index) => (data[index] = { index, name, value }));
   // 冊数の多い順でソート
   data.sort((a, b) => b.value - a.value);
   return data;

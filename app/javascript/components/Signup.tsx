@@ -5,6 +5,10 @@ import styled from "styled-components";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+axios.defaults.headers.common = {
+  "X-Requested-With": "XMLHttpRequest",
+  "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+};
 const Base = styled.div`
   width: 100%;
   display: flex;

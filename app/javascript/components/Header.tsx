@@ -10,6 +10,11 @@ import Hamburger from "./Hamburger";
 import CreateBook from "./CreateBook";
 import SearchBar from "./SearchBar";
 
+axios.defaults.headers.common = {
+  "X-Requested-With": "XMLHttpRequest",
+  "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+};
+
 const Base = styled.header`
   position: fixed;
   z-index: 10;

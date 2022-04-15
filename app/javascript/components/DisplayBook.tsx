@@ -5,6 +5,10 @@ import axios from "axios";
 import { MdDeleteForever } from "react-icons/md";
 import { pc, tab, sp } from "../utils/media";
 
+axios.defaults.headers.common = {
+  "X-Requested-With": "XMLHttpRequest",
+  "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+};
 const BookLists = styled.ul`
   display: flex;
   justify-content: space-around;
