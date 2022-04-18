@@ -1,11 +1,9 @@
 import React, {useContext, useState} from "react";
-import {Routes, Route, Link, Outlet} from "react-router-dom";
-import {useSpring, animated} from "react-spring";
+import {Routes, Route, Link} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import {pc, tab, sp} from "../utils/media";
 import AppContext from "../contexts/AppContext";
-import useInterval from "../utils/useInterval";
 import Hamburger from "./Hamburger";
 import CreateBook from "./CreateBook";
 import SearchBar from "./SearchBar";
@@ -19,20 +17,10 @@ axios.defaults.headers.common = {
 
 function Header() {
   const {
-    state: {showBooks, isSignIn},
+    state: {isSignIn},
     dispatch,
   } = useContext(AppContext);
-  const [resultBookCount, setResultBookCount] = useState(0);
   const [isOpenAddPage, setIsOpenAddPage] = useState(false);
-  const spring = useSpring({
-    opacity: isOpenAddPage ? "1" : "0",
-    display: isOpenAddPage ? "block" : "none",
-    config: {duration: 250},
-  });
-  function countUpDown() {
-    resultBookCount < showBooks.length && setResultBookCount(resultBookCount + 1);
-    resultBookCount > showBooks.length && setResultBookCount(resultBookCount - 1);
-  }
 
   const signout = () => {
     // sessionとcookiesを掃除する処理を書く
@@ -40,27 +28,20 @@ function Header() {
     // カレントユーザーのステートを初期化する
     dispatch({type: "SIGN_OUT_EVENT"});
   };
-  useInterval(countUpDown, 10);
 
   return (
     <Base>
+      <CSSTransition in={isOpenAddPage} timeout={700} classNames="fade" unmountOnExit>
+        <CreateBook close={() => setIsOpenAddPage(!isOpenAddPage)} />
+      </CSSTransition>
       <div className="wrapper">
         <LeftSide>
           <Logo>書籍<br />管理</Logo>
           {isSignIn && (
-            <>
-              <CSSTransition in={isOpenAddPage} timeout={700} classNames="fade" unmountOnExit>
-                <CreateBook close={() => setIsOpenAddPage(!isOpenAddPage)} />
-              </CSSTransition>
-              <Routes>
-                <Route path="/books" element={<SearchBar />} />
-                <Route path="*" element={<Outlet />} />
-              </Routes>
-              <Routes>
-                <Route path="/books" element={<p className="result-book-count">{resultBookCount}</p>} />
-                <Route path="*" element={<Blank />} />
-              </Routes>
-            </>
+            <Routes>
+              <Route path="/books" element={<SearchBar />} />
+              <Route path="*" element={<Blank />} />
+            </Routes>
           )}
         </LeftSide>
         {isSignIn && (
@@ -94,18 +75,6 @@ const Base = styled.header`
     justify-content: space-between;
     align-items: center;
   }
-`;
-const LeftSide = styled.div`
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  height: 72px;
-  ${tab`
-    height: 56px;
-  `}
-  ${sp`
-    height: 56px;
-  `}
   .fade-enter {
     opacity: 0;
   }
@@ -120,27 +89,18 @@ const LeftSide = styled.div`
     opacity: 0;
     transition: opacity 0.3s;
   }
-  .result-book-count {
-    color: #eaeded;
-    font-weight: bold;
-    font-size: 48px;
-    &::after {
-      content: "冊";
-      font-size: 16px;
-    }
-    ${tab`
-      font-size: 32px;
-      &::after {
-        font-size: 16px;
-      }
-    `}
-    ${sp`
-      font-size: 16px;
-      &::after {
-        font-size: 8px;
-      }
-    `}
-  }
+`;
+const LeftSide = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 72px;
+  ${tab`
+    height: 56px;
+  `}
+  ${sp`
+    height: 56px;
+  `}
 `;
 
 const Logo = styled.h1`
