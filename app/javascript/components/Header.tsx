@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {Routes, Route} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -33,7 +33,6 @@ function Header() {
     </Base>
   );
 }
-// <Hamburger signout={signout} addBook={() => setIsOpenAddPage(!isOpenAddPage)} />
 
 export default Header;
 
@@ -109,76 +108,3 @@ ${sp`
 const Blank = styled.div`
   margin: 0 auto;
 `;
-const Nav = styled.nav`
-  display: flex;
-  justify-content: right;
-  display: block;
-  ${tab`
-    display: none;
-  `}
-  ${sp`
-    display: none;
-  `}
-  .link {
-    font-size: 14px;
-    padding: 3px 10px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    &:hover {
-      background-color: #eb6100;
-    }
-  }
-  .add-book-btn {
-    color: white;
-    font-size: 14px;
-    border: none;
-    padding: 3px 10px;
-    background-color: transparent;
-    cursor: pointer;
-    &:hover {
-      background-color: #eb6100;
-    }
-}
-`;
-const Hamburger = styled.div`
-display: none;
-${tab`
-  display: block;
-`}
-${sp`
-  display: block;
-`}
-.ham-icon {
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-}
-.ham-items {
-  width: 150px;
-  font-size: 14px;
-  background-color: white;
-  position: fixed;
-  top: 76px;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-items: flex-start;
-  z-index: 1000;
-}
-.ham-item {
-  width: 100%;
-  margin-top: 10px;
-  border-bottom: 1px;
-  padding: 3px 10px;
-  color: #000000;
-  cursor: pointer;
-  &:hover {
-    background-color: #eb6100;
-  }
-}
-.txt-deco-none {
-  text-decoration: none;
-}
-`
