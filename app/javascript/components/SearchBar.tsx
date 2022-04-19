@@ -70,6 +70,7 @@ align-items: center;
   color: #000000;
   font-weight: bold;
   border: none;
+  cursor: pointer;
 }
 .result-book-count {
   color: #eaeded;

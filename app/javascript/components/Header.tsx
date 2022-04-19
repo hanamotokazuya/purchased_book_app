@@ -85,7 +85,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 color: #eaeded;
-width: 64px
+width: 64px;
 height: 64px;
 font-size: 16px;
 ${pc`

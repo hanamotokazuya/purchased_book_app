@@ -148,6 +148,7 @@ const FormBox = styled.div`
     width: 250px;
     height: 30px;
     margin-bottom: 10px;
+    cursor: pointer;
   }
   .submit {
     width: 250px;
@@ -155,6 +156,7 @@ const FormBox = styled.div`
     border-radius: 5px;
     background-color: white;
     color: #000000;
+    cursor: pointer;
   }
 `;
 const ErrorMessageBox = styled.div`
