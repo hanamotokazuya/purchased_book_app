@@ -1,4 +1,4 @@
-nobita:
-  name: Nobita Nobi
-  email: doraemon@doraemon.com
-  password_digest: <%= User.digest('nobisuke') %>
+yamada:
+  name: Taro Yamada
+  email: yamada@example.com
+  password_digest: <%= User.digest('taroyamada') %>

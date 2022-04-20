@@ -3,7 +3,7 @@ require "test_helper"
 class BookTest < ActiveSupport::TestCase
 
   def setup
-    @user = users(:nobita)
+    @user = users(:yamada)
     @book = @user.books.build(title: "React", category: "programming")
   end
 
