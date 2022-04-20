@@ -33,8 +33,8 @@ function Navbar() {
       <Nav>
         <Link className="link" to="/books">本を並べる</Link>
         <Link className="link" to="/pie_chart">パイチャート</Link>
-        <Link className="link" to="/signin">サインアウト</Link>
         <button className="add-book-btn" onClick={() => setIsOpenAddPage(!isOpenAddPage)}>本を追加する</button>
+        <Link className="link" to="/signin">サインアウト</Link>
       </Nav>
       <Hamburger>
         <IconContext.Provider value={{color: "#eaeded", size: "64px"}}>
