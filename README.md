@@ -1,21 +1,16 @@
 # Purchased Book App
-書籍の表紙画像をアップロードすることで、これまでに購入した書籍を管理するサイトです。
-
-これまでに購入した本をカテゴリー毎に分けることで、どういう本をよく購入しているかを俯瞰できます。
-
+書籍の表紙画像をアップロードすることで、これまでに購入した書籍を管理するサイトです。<br>
+これまでに購入した本をカテゴリー毎に分けることで、どういう本をよく購入しているかを俯瞰できます。<br>
 レスポンシブ対応しているのでスマホからもご確認いただけます。
 
+# デモ
+https://user-images.githubusercontent.com/39664960/164224369-742ebf52-afbc-42fe-878c-06cb760395d0.mp4
 
-![purchased-book-app1_github](https://user-images.githubusercontent.com/39664960/164188496-f5a4085e-c0f4-4584-acc1-ce319f1e65b7.png)
-
-
-![purchased-book-app2_github](https://user-images.githubusercontent.com/39664960/164189448-2a655b32-e411-4f64-aab1-4e9b8e345d97.png)
 # URL
 [https://purchased-book-app.herokuapp.com/](https://purchased-book-app.herokuapp.com/)
 
 # Features
-書籍アップロードはタイトルとカテゴリーの入力および表紙画像ファイルの添付を必要とします。
-
+書籍アップロードはタイトルとカテゴリーの入力および表紙画像ファイルの添付を必要とします。<br>
 カテゴリーとキーワードによる検索で書籍を絞り込むことができます。
 
 # 使用技術
