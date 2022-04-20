@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import React, {useState} from "react";
+import {PieChart, Pie, Sector, Cell, ResponsiveContainer} from "recharts";
 import styled from "styled-components";
-import { pc, tab, sp } from "../utils/media";
+import {pc, tab, sp} from "../utils/media";
 
 const PieText = styled.text`
   ${pc`
@@ -19,11 +19,11 @@ type Props = {
   colors: string[];
 };
 
-function PieChartFig({ data, colors }: Props) {
+function PieChartFig({data, colors}: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = (index: number) => setActiveIndex(index);
   return (
-    <ResponsiveContainer width={"80%"} height={430}>
+    <ResponsiveContainer width={"80%"} height={350}>
       <PieChart>
         <Pie
           data={data}
@@ -38,7 +38,7 @@ function PieChartFig({ data, colors }: Props) {
           fill="#82ca9d"
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
-          onMouseEnter={(_, index) => onPieEnter(index)}
+          onMouseEnter={(_, index:number) => onPieEnter(index)}
         >
           {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
@@ -52,11 +52,9 @@ function PieChartFig({ data, colors }: Props) {
 export default PieChartFig;
 
 function renderActiveShape(props: PieActiveShape) {
-  const RADIAN = Math.PI / 180;
   const {
     cx,
     cy,
-    midAngle,
     innerRadius,
     outerRadius,
     startAngle,
@@ -66,18 +64,10 @@ function renderActiveShape(props: PieActiveShape) {
     value,
     name,
   } = props;
-  const sin = Math.sin(-RADIAN * midAngle);
-  const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius + 10) * cos;
-  const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 30) * cos;
-  const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-  const ey = my;
-  const textAnchor = cos >= 0 ? "start" : "end";
 
   return (
     <g>
+      <PieText x={0} y={30}>{`${name}: ${value}冊 (Rate ${(percent * 100).toFixed(2)}%)`}</PieText>
       <Sector
         cx={cx}
         cy={cy}
@@ -96,17 +86,6 @@ function renderActiveShape(props: PieActiveShape) {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <PieText
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-      >{`${name}: ${value}冊`}</PieText>
-      <PieText x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
-      </PieText>
     </g>
   );
 }
