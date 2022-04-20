@@ -9,7 +9,7 @@ https://user-images.githubusercontent.com/39664960/164224369-742ebf52-afbc-42fe-
 # URL
 [https://purchased-book-app.herokuapp.com/](https://purchased-book-app.herokuapp.com/)
 
-# Features
+# 特徴
 書籍アップロードはタイトルとカテゴリーの入力および表紙画像ファイルの添付を必要とします。<br>
 カテゴリーとキーワードによる検索で書籍を絞り込むことができます。
 
