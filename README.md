@@ -4,7 +4,11 @@
 これまでに購入した本をカテゴリー毎に分けることで、どういう本をよく購入しているかを俯瞰できます。
 
 レスポンシブ対応しているのでスマホからもご確認いただけます。
+
+
 ![purchased-book-app1_github](https://user-images.githubusercontent.com/39664960/164188496-f5a4085e-c0f4-4584-acc1-ce319f1e65b7.png)
+
+
 ![purchased-book-app2_github](https://user-images.githubusercontent.com/39664960/164189448-2a655b32-e411-4f64-aab1-4e9b8e345d97.png)
 # URL
 [https://purchased-book-app.herokuapp.com/](https://purchased-book-app.herokuapp.com/)
