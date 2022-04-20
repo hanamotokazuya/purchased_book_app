@@ -5,13 +5,6 @@ import PieChartFig from "./PieChartFig";
 import styled from "styled-components";
 import { COLORS } from "../constants";
 
-const Base = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-items: center;
-`;
 
 function DisplayPieChart() {
   const {
@@ -27,6 +20,15 @@ function DisplayPieChart() {
   );
 }
 
+export default DisplayPieChart;
+
+const Base = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+`;
 // 購入書籍のデータをパイチャートで使用できるフォーマットに変換する関数
 function dataFormatForPieChart(books: Book[]): PieChartFormat[] {
   const countMap: Map<string, number> = new Map();
@@ -47,4 +49,3 @@ function dataFormatForPieChart(books: Book[]): PieChartFormat[] {
   return data;
 }
 
-export default DisplayPieChart;

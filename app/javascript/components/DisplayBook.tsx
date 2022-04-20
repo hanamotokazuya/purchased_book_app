@@ -4,11 +4,47 @@ import AppContext from "../contexts/AppContext";
 import axios from "axios";
 import { MdDeleteForever } from "react-icons/md";
 import { pc, tab, sp } from "../utils/media";
+import {toast} from "react-toastify";
 
 axios.defaults.headers.common = {
   "X-Requested-With": "XMLHttpRequest",
   "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
 };
+
+function DisplayBook() {
+  const {
+    state: { showBooks },
+    dispatch,
+  } = useContext(AppContext);
+  const handleClickBookDelete = (book: Book) => {
+    const isDelete = window.confirm(`${book.title}を削除してよろしいですか？`);
+    if (isDelete) {
+      axios
+        .delete(`/api/v1/books/destroy/${book.id}`)
+        .then(() => {
+          dispatch({ type: "DELETE_BOOK_EVENT", id: book.id });
+          toast.success(`${book.title}を削除しました!`);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+  return (
+    <BookLists>
+      {!showBooks.length && <p>本がありません。</p>}
+      {showBooks.map((book: Book, key: number) => (
+        <BookList key={key}>
+          <BookImage src={book.url} />
+          <DeleteIcon onClick={() => handleClickBookDelete(book)} />
+        </BookList>
+      ))}
+    </BookLists>
+  );
+}
+
+export default DisplayBook;
+
 const BookLists = styled.ul`
   display: flex;
   justify-content: space-around;
@@ -58,35 +94,3 @@ const BookImage = styled.img`
   height: 100%;
 `;
 
-function DisplayBook() {
-  const {
-    state: { showBooks },
-    dispatch,
-  } = useContext(AppContext);
-  const handleClickBookDelete = (book: Book) => {
-    const isDelete = window.confirm(`${book.title}を削除してよろしいですか？`);
-    if (isDelete) {
-      axios
-        .delete(`/api/v1/books/destroy/${book.id}`)
-        .then(() => {
-          dispatch({ type: "DELETE_BOOK_EVENT", id: book.id });
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  };
-  return (
-    <BookLists>
-      {!showBooks.length && <p>本がありません。</p>}
-      {showBooks.map((book: Book, key: number) => (
-        <BookList key={key}>
-          <BookImage src={book.url} />
-          <DeleteIcon onClick={() => handleClickBookDelete(book)} />
-        </BookList>
-      ))}
-    </BookLists>
-  );
-}
-
-export default DisplayBook;

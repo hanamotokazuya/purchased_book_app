@@ -9,68 +9,6 @@ axios.defaults.headers.common = {
   "X-Requested-With": "XMLHttpRequest",
   "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
 };
-const Base = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-items: center;
-`;
-const Title = styled.h1`
-  margin: 6px 0;
-  font-size: 20px;
-`;
-const SignupForm = styled.form`
-  width: 50%;
-  min-width: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-`;
-const FormLabel = styled.label`
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: 700;
-`;
-const FormText = styled.input`
-  width: 100%;
-  padding: 6px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #555555;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  margin-bottom: 15px;
-`;
-const FormButton = styled.button`
-  margin-top: 10px;
-  width: 100%;
-  color: white;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-  cursor: pointer;
-  border: 1px solid transparent;
-  padding: 6px;
-  font-size: 14px;
-  border-radius: 4px;
-`;
-const ErrorMessageBox = styled.div`
-  margin-top: 10px;
-  max-width: 100%;
-  padding: 10px;
-  color: red;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  margin-bottom: 15px;
-`;
-const ErrorMessage = styled.p`
-  font-size: 12px;
-`;
 
 function Signup() {
   const [name, setName] = useState("");
@@ -143,3 +81,67 @@ function Signup() {
 }
 
 export default Signup;
+
+const Base = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+`;
+const Title = styled.h1`
+  margin: 6px 0;
+  font-size: 20px;
+`;
+const SignupForm = styled.form`
+  width: 50%;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`;
+const FormLabel = styled.label`
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+`;
+const FormText = styled.input`
+  width: 100%;
+  padding: 6px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555555;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+  margin-bottom: 15px;
+`;
+const FormButton = styled.button`
+  margin-top: 10px;
+  width: 100%;
+  color: white;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 4px;
+`;
+const ErrorMessageBox = styled.div`
+  margin-top: 10px;
+  max-width: 100%;
+  padding: 10px;
+  color: red;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+  margin-bottom: 15px;
+`;
+const ErrorMessage = styled.p`
+  font-size: 12px;
+`;
+

@@ -9,6 +9,74 @@ axios.defaults.headers.common = {
   "X-Requested-With": "XMLHttpRequest",
   "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
 };
+
+function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isRemember, setIsRemember] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AppContext);
+
+  const signIn = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    email: string,
+    password: string,
+    isRemember: boolean
+  ) => {
+    e.preventDefault();
+    const data = {
+      email: email,
+      password: password,
+      remember_me: isRemember,
+    };
+    axios
+      .post("/api/v1/sessions/create", { session: data }, { withCredentials: true })
+      .then((res) => {
+        if (res.data && !Array.isArray(res.data)) {
+          dispatch({
+            type: "SIGN_IN_EVENT",
+            name: res.data.name,
+            email: res.data.email,
+          });
+          toast.success("サインイン！");
+          navigate("/books");
+        } else {
+          setIsError(!res.data);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  return (
+    <Base>
+      <Title>サインイン</Title>
+      <SigninForm>
+        <FormLabel>Eメール</FormLabel>
+        <FormText type="text" onChange={(e) => setEmail(e.target.value)} />
+        <FormLabel>パスワード</FormLabel>
+        <FormText type="password" onChange={(e) => setPassword(e.target.value)} />
+        <FormCheckBoxWrapper>
+          <RememberMeCheckBox type="checkbox" onChange={() => setIsRemember(!isRemember)} />
+          <FormCheckBoxLabel>次回から自動でログイン</FormCheckBoxLabel>
+        </FormCheckBoxWrapper>
+        <FormButton onClick={(e) => signIn(e, email, password, isRemember)}>
+          サインインする
+        </FormButton>
+      </SigninForm>
+      <Link to="/signup">新規登録</Link>
+      {isError && (
+        <ErrorMessageBox>
+          <ErrorMessage>メールアドレスまたはパスワードが違います。</ErrorMessage>
+        </ErrorMessageBox>
+      )}
+    </Base>
+  );
+}
+
+export default SignIn;
+
 const Base = styled.div`
   width: 100%;
   display: flex;
@@ -85,69 +153,3 @@ const ErrorMessage = styled.p`
   font-size: 12px;
 `;
 
-function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isRemember, setIsRemember] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const navigate = useNavigate();
-  const { dispatch } = useContext(AppContext);
-
-  const signIn = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    email: string,
-    password: string,
-    isRemember: boolean
-  ) => {
-    e.preventDefault();
-    const data = {
-      email: email,
-      password: password,
-      remember_me: isRemember,
-    };
-    axios
-      .post("/api/v1/sessions/create", { session: data }, { withCredentials: true })
-      .then((res) => {
-        if (res.data && !Array.isArray(res.data)) {
-          dispatch({
-            type: "SIGN_IN_EVENT",
-            name: res.data.name,
-            email: res.data.email,
-          });
-          toast.success("サインイン！");
-          navigate("/books");
-        } else {
-          setIsError(!res.data);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-  return (
-    <Base>
-      <Title>サインイン</Title>
-      <SigninForm>
-        <FormLabel>Eメール</FormLabel>
-        <FormText type="text" onChange={(e) => setEmail(e.target.value)} />
-        <FormLabel>パスワード</FormLabel>
-        <FormText type="password" onChange={(e) => setPassword(e.target.value)} />
-        <FormCheckBoxWrapper>
-          <RememberMeCheckBox type="checkbox" onChange={() => setIsRemember(!isRemember)} />
-          <FormCheckBoxLabel>次回から自動でログイン</FormCheckBoxLabel>
-        </FormCheckBoxWrapper>
-        <FormButton onClick={(e) => signIn(e, email, password, isRemember)}>
-          サインインする
-        </FormButton>
-      </SigninForm>
-      <Link to="/signup">新規登録</Link>
-      {isError && (
-        <ErrorMessageBox>
-          <ErrorMessage>メールアドレスまたはパスワードが違います。</ErrorMessage>
-        </ErrorMessageBox>
-      )}
-    </Base>
-  );
-}
-
-export default SignIn;

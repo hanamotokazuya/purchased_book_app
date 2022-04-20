@@ -2,6 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import { pc, tab, sp } from "../utils/media";
 
+type Props = {
+  data: PieChartFormat[];
+  colors: string[];
+};
+function PieChartLegends({ data, colors }: Props) {
+  return (
+    <LegendItems>
+      {data.map((entry, index) => (
+        <LegendItem key={index}>
+          <LegendColor style={{ backgroundColor: colors[index % colors.length] }} />
+          <LegendName>{entry.name}</LegendName>
+        </LegendItem>
+      ))}
+    </LegendItems>
+  );
+}
+
+export default PieChartLegends;
+
 const LegendItems = styled.div`
   width: 80%;
   min-width: 280px;
@@ -56,21 +75,3 @@ const LegendName = styled.p`
   `}
 `;
 
-type Props = {
-  data: PieChartFormat[];
-  colors: string[];
-};
-function PieChartLegends({ data, colors }: Props) {
-  return (
-    <LegendItems>
-      {data.map((entry, index) => (
-        <LegendItem key={index}>
-          <LegendColor style={{ backgroundColor: colors[index % colors.length] }} />
-          <LegendName>{entry.name}</LegendName>
-        </LegendItem>
-      ))}
-    </LegendItems>
-  );
-}
-
-export default PieChartLegends;

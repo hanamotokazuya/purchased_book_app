@@ -3,17 +3,6 @@ import {PieChart, Pie, Sector, Cell, ResponsiveContainer} from "recharts";
 import styled from "styled-components";
 import {pc, tab, sp} from "../utils/media";
 
-const PieText = styled.text`
-  ${pc`
-    font-size: 14px;
-  `}
-  ${tab`
-    font-size: 12px;
-  `}
-  ${sp`
-    font-size: 10px;
-  `}
-`;
 type Props = {
   data: PieChartFormat[];
   colors: string[];
@@ -50,6 +39,18 @@ function PieChartFig({data, colors}: Props) {
 }
 
 export default PieChartFig;
+
+const PieText = styled.text`
+  ${pc`
+    font-size: 14px;
+  `}
+  ${tab`
+    font-size: 12px;
+  `}
+  ${sp`
+    font-size: 10px;
+  `}
+`;
 
 function renderActiveShape(props: PieActiveShape) {
   const {
